@@ -1,0 +1,22 @@
+# Ignorar configuraciones locales y temporales
+AppData/
+.config/
+.cache/
+.vscode/
+*.aidl
+*.xml
+*.jar
+*.properties
+*.txt
+
+# Ignorar binarios y builds
+build/
+bin/
+out/
+obj/
+*.class
+*.log
+*.tmp
+*.apk
+*.exe
+*.dll
