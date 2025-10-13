@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url(../img/fondo_pantalla_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+#caja_inicio {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.caja_usuario, .caja_contra {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+#text_user, #text_contra {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+#name_user, #contra_user {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+#name_user:focus, #contra_user:focus {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#caja_inicio nav:last-of-type {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: #000;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+#iconos_redes_sociales {
+    margin-top: 30px;
+}
+
+#iconos_redes_sociales nav {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+#iconos_redes_sociales img {
+    width: 25px;
+    filter: brightness(0) invert(1);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#iconos_redes_sociales img:hover {
+    transform: scale(1.2);
+}
