@@ -49,6 +49,7 @@ header {
 #text_user, #text_contra {
     font-weight: 600;
     margin-bottom: 6px;
+    color: #fff;
 }
 
 #name_user, #contra_user {
@@ -58,7 +59,7 @@ header {
     outline: none;
     font-size: 15px;
     background-color: rgba(255, 255, 255, 0.25);
-    color: #fff;
+    color: #ffffff;
     transition: background-color 0.3s ease;
 }
 
