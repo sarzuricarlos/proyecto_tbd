@@ -4,7 +4,10 @@
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+h3{
+    color: #fff;
+    text-align: center;
+}
 body {
     background-image: url(../img/fondo_pantalla_inicio.jpg);
     background-size: cover;
@@ -27,7 +30,7 @@ header {
     margin-bottom: 30px;
 }
 
-#caja_inicio {
+.formulario {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -46,13 +49,20 @@ header {
     text-align: left;
 }
 
-#text_user, #text_contra {
+#mensaje_inicio, #mensaje_registro {
+    display: none; 
+    margin-top: 10px; 
+    padding: 10px; 
+    border-radius: 5px;
+}
+
+span {
     font-weight: 600;
     margin-bottom: 6px;
     color: #fff;
 }
 
-#name_user, #contra_user {
+input {
     padding: 12px;
     border-radius: 8px;
     border: none;
@@ -73,6 +83,22 @@ header {
     margin-top: 10px;
 }
 
+#caja_registro nav:last-of-type {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#foto_perfil{
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 13.5px;
+    background-color: rgba(255, 255, 255, 0.6);
+    color: #000000;
+}
+
 button {
     flex: 1;
     margin: 0 5px;
@@ -90,6 +116,38 @@ button:hover {
     background-color: #333;
     transform: scale(1.05);
 }
+
+/* Animación de desvanecimiento y deslizamiento */
+.fade-slide-in {
+    animation: fadeSlideIn 0.5s forwards;
+}
+
+.fade-slide-out {
+    animation: fadeSlideOut 0.5s forwards;
+}
+
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
 
 #iconos_redes_sociales {
     margin-top: 30px;

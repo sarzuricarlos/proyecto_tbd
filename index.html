@@ -6,14 +6,56 @@
     <link rel="shortcut icon" href="assets/icons/bash_icono_pagina.svg" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/index.css">
     <title>Bash Academy</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="assets/javascript/conexion_supabase.js"></script>
+    <script src="assets/javascript/index.js"></script>
+    <script src="assets/javascript/login.js"></script>
 </head>
 <body>
     <header>Bash Academy</header>
-    <article id="caja_inicio">
-        <nav class="caja_usuario"><span id="text_user">Usuario</span><input type="" name="" id="name_user"></nav>
-        <nav class="caja_contra"><span id="text_contra">Contraseña</span><input type="" name="" id="contra_user"></nav>
-        <nav><button type="button">Iniciar Sesion</button><button type="button">Registrar usuario</button></nav>
+    <article id="caja_inicio" class="formulario">
+        <nav class="caja_usuario"><span id="texto_index">Usuario</span><input type="text" name="" id="name_user"></nav>
+        <nav class="caja_contra"><span id="text_contra">Contraseña</span><input type="password" name="" id="contra_user"></nav>
+        <nav>
+            <button type="button" onclick="login()">Iniciar Sesion</button>
+            <button type="button" onclick="showRegister()">Registrar usuario</button>
+        </nav>
+        <div id="mensaje_inicio"></div>
     </article>
+
+    <article id="caja_registro" class="formulario" style="display: none;">
+        <h3>Registrar Nuevo Usuario</h3>
+        <nav class="caja_usuario">
+            <span>Nombre</span>
+            <input type="text" id="reg_nombre">
+        </nav>
+        <nav class="caja_usuario">
+            <span>Apellido</span>
+            <input type="text" id="reg_apellido">
+        </nav>
+        <nav class="caja_usuario">
+            <span>Correo electrónico</span>
+            <input type="email" id="reg_correo">
+        </nav>
+        <nav class="caja_contra">
+            <span>Contraseña</span>
+            <input type="password" id="reg_contrasena">
+        </nav>
+        <nav class="caja_fecha_nacimiento">
+            <span>Fecha de nacimiento</span>
+            <input type="date" id="reg_nacimiento">
+        </nav>
+        <nav class="caja_foto_perfil">
+            <span>Foto de perfil</span>
+            <input type="file" id="foto_perfil" accept="image/*">
+        </nav>
+        <nav>
+            <button type="button" onclick="register()">Registrar</button>
+            <button type="button" onclick="showLogin()">Volver al Login</button>
+        </nav>
+        <div id="mensaje_registro"></div>
+    </article>
+
     <footer id="iconos_redes_sociales">
         <nav>
             <img src="assets/icons/instagram.svg" alt="">
