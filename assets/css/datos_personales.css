@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+    color: #fff;
+    text-align: center;
+}
+
+body {
+    background-image: url(../img/fondo_pantalla_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+span {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+/* ===== CONTENEDOR PRINCIPAL ===== */
+#datos_personales {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* foto | datos */
+    gap: 30px;
+    align-items: start;
+    width: 40%;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+}
+
+/* ===== FOTO DE PERFIL (COLUMNA IZQUIERDA) ===== */
+#foto_perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center; /* Centrar en su columna */
+    margin-top: 2em;
+}
+
+#foto_perfil img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #444;
+    margin-bottom: 10px;
+}
+
+#foto_perfil span {
+    font-size: 1.1em;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.755);
+    padding: 10px 10px;
+    border-radius: 8px;
+}
+
+/* ===== CONTENEDOR DE DATOS (COLUMNA DERECHA) ===== */
+#contenedor_datos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ===== ESTILOS PARA LOS NAVS DE DATOS ===== */
+#contenedor_datos nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#contenedor_datos span {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+#contenedor_datos input {
+    border: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    width: 100%;
+    font-size: 1em;
+    color: #ffffff;
+    padding: 5px 10px;
+    cursor: default;
+}
+
+/* ===== BOTÓN EDITAR (EN COLUMNA DERECHA) ===== */
+#boton_editar_datos {
+    align-self: flex-start; /* Alinear a la izquierda dentro de su contenedor */
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#boton_editar_datos:hover {
+    background-color: #444;
+}

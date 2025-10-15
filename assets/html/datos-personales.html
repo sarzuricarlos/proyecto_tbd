@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="/assets/icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/datos_personales.css">
+    <title>Datos personales</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/assets/javascript/conexion_supabase.js"></script>
 </head>
 <body>
-    
+    <header>Bash Academy</header>
+    <h3>Datos personales</h3>
+    <article id="datos_personales">
+        <!-- COLUMNA IZQUIERDA: Solo la foto -->
+        <nav id="foto_perfil">
+            <img id="foto_perfil_usu" src="">
+            <span>Foto de perfil</span>
+        </nav>
+
+        <!-- COLUMNA DERECHA: Todos los demás elementos -->
+        <div id="contenedor_datos">
+            <nav id="nombre">
+                <span>Nombre</span>
+                <input type="text" id="nombre_usu" disabled></input>
+            </nav>
+            <nav id="apellidos">
+                <span>Apellidos</span>
+                <input type="text" id="apellidos_usu" disabled></input>
+            </nav>
+            <nav id="email">
+                <span>Email</span>
+                <input type="email" id="email_usu" disabled></input>
+            </nav>
+            <nav id="nacimiento">
+                <span>Fecha de nacimiento</span>
+                <input type="date" id="nacimiento_usu" disabled></input>
+            </nav>
+            <button type="button" id="boton_editar_datos">Editar datos</button>
+        </div>
+    </article>
 </body>
 </html>

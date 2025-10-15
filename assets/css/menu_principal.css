@@ -35,3 +35,99 @@ h3 {
     letter-spacing: 2px;
     margin-bottom: 30px;
 }
+
+#menu {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    justify-items: center;
+    align-items: center;
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.boton_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid #ffffff00;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton_menu:hover {
+    transform: translateY(-4px);
+    background: rgba(0, 0, 0, 0.504);
+}
+
+.boton_menu img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.boton_menu span {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+#iconos_redes_sociales {
+    margin-top: 3em;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* 3 columnas */
+    align-items: center;
+    padding: 10px 20px;
+    background: transparent; /* o el color que quieras */
+    position: relative;
+    width: 100%;
+}
+
+/* Centramos las redes sociales */
+#iconos_redes_sociales nav {
+    grid-column: 2; /* Columna central */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Íconos */
+#iconos_redes_sociales nav img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#iconos_redes_sociales img:hover {
+    transform: scale(1.2);
+}
+
+#iconos_redes_sociales button {
+    grid-column: 1; /* Columna izquierda */
+    justify-self: start; /* Alineado al borde izquierdo */
+    color: #fff; /* o el color que combine con tu fondo */
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+#iconos_redes_sociales h3 {
+    grid-column: 3; /* Columna derecha */
+    justify-self: end; /* Alineado al borde derecho */
+    color: #fff; /* o el color que combine con tu fondo */
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}

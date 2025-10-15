@@ -62,7 +62,6 @@ async function register() {
             .from('perfil')
             .getPublicUrl(uploadData.path);
 
-        // ✅ Llamar procedimiento (incluye verificación de correo)
         const { data, error } = await supabase.rpc('registrar_usuario', {
             p_nombre_usuario: nombre_usuario,
             p_apellido: apellido,
@@ -76,6 +75,11 @@ async function register() {
             showMessage('❌ Error técnico: ' + error.message, 'error', 'registro');
         } else if (data.success) {
             showMessage('✅ ' + data.message, 'success', 'registro');
+                localStorage.setItem('user', JSON.stringify({
+                    nombre_usuario,
+                    apellido,
+                    correo
+                }));
             showLogin();
         } else {
             showMessage('❌ ' + data.message, 'error', 'registro');
