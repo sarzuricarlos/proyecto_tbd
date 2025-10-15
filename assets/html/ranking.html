@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="/assets/icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/assets/css/ranking.css">
+    <title>Ranking</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="/assets/javascript/conexion_supabase.js"></script>
+    <!-- ELIGE UNA OPCIÓN: -->
+    <script src="assets/javascript/ranking.js"></script> <!-- Opción 2 -->
+    <!-- O -->
+    <script src="../javascript/ranking.js"></script> <!-- Opción 1 -->
 </head>
 <body>
-    
+    <header>Bash Academy</header>
+    <h3>Ranking</h3>
+    <article id="ranking">
+        <table id="tabla_ranking">
+            <thead>
+                <tr>
+                    <th>Posición</th>
+                    <th>Usuario</th>
+                    <th>Puntuación</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo_tabla_ranking">
+                <!-- Filas generadas dinámicamente -->
+            </tbody>
+        </table>
+
+        <div id="botones_ranking">
+            <button type="button" id="volver_menu">Menú principal</button>
+        </div>
+    </article>
 </body>
 </html>

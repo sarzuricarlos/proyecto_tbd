@@ -8,13 +8,15 @@
     <title>Datos personales</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="/assets/javascript/conexion_supabase.js"></script>
+    <script src="/assets/javascript/datos_personales.js"></script>
 </head>
 <body>
     <header>Bash Academy</header>
     <h3>Datos personales</h3>
     <article id="datos_personales">
         <nav id="foto_perfil">
-            <img id="foto_perfil_usu" src="">
+            <img id="foto_perfil_usu" src="" alt="Foto de perfil">
+            <input type="file" id="input_foto" accept="image/*" style="display: none;">
             <span>Foto de perfil</span>
         </nav>
         <div id="contenedor_datos">
@@ -36,7 +38,8 @@
             </nav>
         <div id="botones_datos">
             <button type="button" id="boton_editar_datos">Editar datos</button>
-            <button type="button" id="volver_menu">Menu principal</button>
+            <button type="button" id="boton_cancelar" style="display:none;">Cancelar</button>
+            <button type="button" id="volver_menu">Menú principal</button>
         </div>
         </div>
     </article>

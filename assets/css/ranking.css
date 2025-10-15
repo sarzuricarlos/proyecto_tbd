@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+    color: #fff;
+    text-align: center;
+}
+
+body {
+    background-image: url(../img/fondo_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+th {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+#ranking {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    margin-top: 1.5rem;
+    width: 90%;
+    max-width: 700px;
+}
+
+/* ======== TABLA ======== */
+#tabla_ranking {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#tabla_ranking thead {
+    background-color: #00000063;
+}
+
+#tabla_ranking th {
+    padding: 12px;
+    color: #f8fafc;
+    font-weight: bold;
+}
+
+#tabla_ranking tbody tr {
+    background-color: #1e293b;
+    transition: background-color 0.3s ease;
+}
+
+#tabla_ranking tbody tr:nth-child(odd) {
+    background-color: #273449;
+}
+
+#tabla_ranking td {
+    padding: 10px;
+    border-bottom: 1px solid #334155;
+}
+
+#tabla_ranking tbody tr:hover {
+    background-color: #334155;
+}
+
+/* ======== BOTONES ======== */
+#botones_ranking {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+#volver_menu {
+    background-color: #38bdf8;
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#volver_menu:hover {
+    background-color: #0ea5e9;
+    transform: scale(1.05);
+}
+
+#volver_menu:active {
+    transform: scale(0.98);
+}
+
+/* ======== RESPONSIVO ======== */
+@media (max-width: 600px) {
+    #tabla_ranking th, #tabla_ranking td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    #ranking {
+        padding: 1.2rem;
+    }
+}
