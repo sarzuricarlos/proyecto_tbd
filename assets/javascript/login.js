@@ -74,12 +74,17 @@ async function register() {
         if (error) {
             showMessage('❌ Error técnico: ' + error.message, 'error', 'registro');
         } else if (data.success) {
+            // ✅ Mensaje actualizado con información de puntos
             showMessage('✅ ' + data.message, 'success', 'registro');
-                localStorage.setItem('user', JSON.stringify({
-                    nombre_usuario,
-                    apellido,
-                    correo
-                }));
+            
+            // Guardar información básica del usuario
+            localStorage.setItem('user', JSON.stringify({
+                id_usuario: data.user_id,  // Ahora tenemos el ID
+                nombre_usuario: nombre_usuario,
+                apellido: apellido,
+                correo: correo
+            }));
+            
             showLogin();
         } else {
             showMessage('❌ ' + data.message, 'error', 'registro');

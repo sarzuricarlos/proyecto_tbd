@@ -4,28 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
-    <link rel="stylesheet" href="../css/ranking.css">
-    <title>Ranking</title>
+    <link rel="stylesheet" href="../css/cursos.css">
+    <title>Cursos</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../javascript/conexion_supabase.js"></script>
-    <script src="../javascript/ranking.js"></script>
+    <script src="../javascript/cursos.js"></script>
 </head>
 <body>
     <header>Bash Academy</header>
-    <h3>Ranking</h3>
-    <article id="ranking">
-        <table id="tabla_ranking">
-            <thead>
-                <tr>
-                    <th>Posición</th>
-                    <th>Usuario</th>
-                    <th>Puntuación</th>
-                </tr>
-            </thead>
-            <tbody id="cuerpo_tabla_ranking">
-                
-            </tbody>
-        </table>
+    <h3>Cursos</h3>
+    <article id="menu">
+        <button type="button" class="boton_menu">
+            <img src="../icons/book_curso.svg" alt="">
+            <span>Cursos disponibles</span>
+        </button>
+        <button type="button" class="boton_menu">
+            <img src="../icons/calendar_horario.svg" alt="">
+            <span>Horarios</span>
+        </button>
     </article>
     <footer id="botones_ranking">
             <button type="button" id="volver_menu">Menú principal</button>

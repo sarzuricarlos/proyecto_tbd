@@ -14,8 +14,19 @@
 <body>
     <header>Bash Academy</header>
     <article id="caja_inicio" class="formulario">
-        <nav class="caja_usuario"><span id="texto_index">Usuario</span><input type="text" name="" id="name_user"></nav>
-        <nav class="caja_contra"><span id="text_contra">Contraseña</span><input type="password" name="" id="contra_user"></nav>
+        <nav class="caja_usuario">
+            <span id="texto_index">Usuario</span>
+            <input type="text" name="" id="name_user">
+        </nav>
+        <nav class="caja_contra">
+            <span>Contraseña</span>
+            <div class="input_con_icono">
+                <input type="password" id="contra_user" placeholder="••••••••">
+                <button type="button" class="toggle-password" data-target="contra_user">
+                    <img src="assets/icons/eye_contra_cerrado.svg" alt="Mostrar contraseña">
+                </button>
+            </div>
+        </nav>
         <nav>
             <button type="button" onclick="login()">Iniciar Sesion</button>
             <button type="button" onclick="showRegister()">Registrar usuario</button>
@@ -39,7 +50,12 @@
         </nav>
         <nav class="caja_contra">
             <span>Contraseña</span>
-            <input type="password" id="reg_contrasena">
+            <div class="input_con_icono">
+                <input type="password" id="reg_contrasena" placeholder="••••••••">
+                <button type="button" class="toggle-password" data-target="reg_contrasena">
+                    <img src="assets/icons/eye_contra_cerrado.svg" alt="Mostrar contraseña">
+                </button>
+            </div>
         </nav>
         <nav class="caja_fecha_nacimiento">
             <span>Fecha de nacimiento</span>

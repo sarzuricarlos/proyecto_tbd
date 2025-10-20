@@ -38,10 +38,9 @@ span {
     color: #fff;
 }
 
-/* ===== CONTENEDOR PRINCIPAL ===== */
 #datos_personales {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* foto | datos */
+    grid-template-columns: 1fr 2fr;
     gap: 30px;
     align-items: start;
     width: 40%;
@@ -52,12 +51,11 @@ span {
     padding: 30px;
 }
 
-/* ===== FOTO DE PERFIL (COLUMNA IZQUIERDA) ===== */
 #foto_perfil {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-self: center; /* Centrar en su columna */
+    justify-self: center;
     margin-top: 2em;
 }
 
@@ -78,14 +76,12 @@ span {
     border-radius: 8px;
 }
 
-/* ===== CONTENEDOR DE DATOS (COLUMNA DERECHA) ===== */
 #contenedor_datos {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-/* ===== ESTILOS PARA LOS NAVS DE DATOS ===== */
 #contenedor_datos nav {
     display: flex;
     flex-direction: column;
@@ -116,8 +112,10 @@ span {
     background-color: transparent;
     margin: auto;
 }
+#boton_cancelar{
+    display:none;
+}
 
-/* ===== BOTÓN EDITAR (EN COLUMNA DERECHA) ===== */
 #boton_editar_datos,#volver_menu,#boton_cancelar {
     padding: 10px 25px;
     margin-top: 10px;
@@ -129,6 +127,11 @@ span {
 }
 
 #boton_editar_datos:hover {
+    cursor: pointer;
+    background-color: #444;
+}
+
+#boton_cancelar:hover {
     cursor: pointer;
     background-color: #444;
 }

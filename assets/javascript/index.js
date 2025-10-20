@@ -15,7 +15,7 @@ function showRegister() {
             registerBox.classList.remove('fade-slide-in');
         }, 500);
     }, 0);
-
+    
     document.getElementById('caja_inicio').style.display = 'none';
     document.getElementById('caja_registro').style.display = 'block';
 }
@@ -57,3 +57,22 @@ function showMessage(message, type, tipoFormulario) {
         messageDiv.style.display = 'none';
     }, 5000);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toggles = document.querySelectorAll(".toggle-password");
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener("click", () => {
+            const targetId = toggle.getAttribute("data-target");
+            const input = document.getElementById(targetId);
+
+            if (input.type === "password") {
+                input.type = "text";
+                toggle.src = "assets/icons/eye_contra_abierto.svg";
+            } else {
+                input.type = "password";
+                toggle.src = "assets/icons/eye_contra_cerrado.svg";
+            }
+        });
+    });
+});

@@ -19,8 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     let datosOriginales = {};
     let nuevaFoto = null;
-
-    // ✅ Cargar datos del usuario
     async function cargarDatos() {
         const { data, error } = await supabase
             .from("usuario")
@@ -45,7 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await cargarDatos();
 
-    // ✅ Hacer clic en la foto → seleccionar nueva imagen
     foto.addEventListener("click", () => {
         inputFoto.click();
     });
@@ -54,14 +51,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const file = event.target.files[0];
         if (!file) return;
 
-        // Mostrar previsualización inmediata
         foto.src = URL.createObjectURL(file);
         nuevaFoto = file;
     });
 
-    // ✅ Botón “Editar datos” / “Guardar datos”
     btnEditar.addEventListener("click", async () => {
         const editando = btnEditar.textContent === "Guardar datos";
+        btnMenu.style.display = "none";
 
         if (!editando) {
             [nombre, apellido, correo, nacimiento].forEach(i => i.disabled = false);
@@ -75,7 +71,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fecha_nacimiento: nacimiento.value
             };
 
-            // ✅ Si hay nueva foto, la subimos
             if (nuevaFoto) {
                 const nombreArchivo = `${Date.now()}_${nuevaFoto.name}`;
                 const { data: fileData, error: uploadError } = await supabase.storage
@@ -94,7 +89,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 nuevosDatos.foto = publicUrl.publicUrl;
             }
 
-            // ✅ Guardamos los datos actualizados
             const { error } = await supabase
                 .from("usuario")
                 .update(nuevosDatos)
@@ -110,14 +104,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             [nombre, apellido, correo, nacimiento].forEach(i => i.disabled = true);
             btnEditar.textContent = "Editar datos";
             btnCancelar.style.display = "none";
+            btnMenu.style.display = "inline-block";
 
-            // Actualizamos valores originales
             datosOriginales = { ...datosOriginales, ...nuevosDatos };
             nuevaFoto = null;
         }
     });
 
-    // ✅ Cancelar edición
     btnCancelar.addEventListener("click", () => {
         nombre.value = datosOriginales.nombre_usuario || "";
         apellido.value = datosOriginales.apellido || "";
@@ -128,10 +121,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         [nombre, apellido, correo, nacimiento].forEach(i => i.disabled = true);
         btnEditar.textContent = "Editar datos";
         btnCancelar.style.display = "none";
+        btnMenu.style.display = "inline-block";
         nuevaFoto = null;
-    });
-
-    // ✅ Volver al menú
+    }); 
     btnMenu.addEventListener("click", () => {
         window.location.href = "./menuprincipal.html";
     });
