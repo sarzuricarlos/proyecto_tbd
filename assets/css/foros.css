@@ -5,11 +5,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h3 {
-    color: #fff;
-    text-align: center;
-}
-
 body {
     background-image: url(../img/fondo_inicio.jpg);
     background-size: cover;
@@ -32,7 +27,16 @@ header {
     margin-bottom: 30px;
 }
 
-/* ======== CONTENEDOR PRINCIPAL ======== */
+h3 {
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
 #eventos {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
@@ -43,11 +47,11 @@ header {
     max-width: 700px;
 }
 
-/* ======== TABLA ======== */
 #tabla_eventos {
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
+    text-align: left;
+    table-layout: fixed;
 }
 
 #tabla_eventos thead {
@@ -58,6 +62,8 @@ header {
     padding: 12px;
     color: #f8fafc;
     font-weight: bold;
+    text-align: center;
+    width: 50%;
 }
 
 #tabla_eventos tbody tr {
@@ -72,13 +78,15 @@ header {
 #tabla_eventos td {
     padding: 10px;
     border-bottom: 1px solid #334155;
+    color: #f1f5f9;
+    text-align: center;
+    word-wrap: break-word;
 }
 
 #tabla_eventos tbody tr:hover {
     background-color: #334155;
 }
 
-/* ======== BOTÓN ======== */
 #botones_eventos {
     display: flex;
     justify-content: center;
@@ -106,7 +114,6 @@ header {
     transform: scale(0.98);
 }
 
-/* ======== RESPONSIVE ======== */
 @media (max-width: 600px) {
     #tabla_eventos th, #tabla_eventos td {
         padding: 8px;

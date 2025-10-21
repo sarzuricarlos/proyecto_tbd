@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/foros.css">
+    <title>Foros</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/foros.js"></script>
 </head>
 <body>
-    
+    <header>Bash Academy</header>
+    <h3>Foros</h3>
+    <article id="eventos">
+        <table id="tabla_eventos">
+            <thead>
+                <tr>
+                    <th>Foro</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo_tabla_eventos">
+                
+            </tbody>
+        </table>
+    </article>
+    <footer id="botones_eventos">
+            <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
 </body>
 </html>

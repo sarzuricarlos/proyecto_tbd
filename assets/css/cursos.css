@@ -84,6 +84,35 @@ h3 {
     font-weight: 500;
 }
 
+.tabla_cursos {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.tabla_cursos th {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+}
+
+.tabla_cursos td {
+    color: #f1f5f9;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla_cursos tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tabla_cursos tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 #iconos_redes_sociales {
     margin-top: 3em;
     display: grid;
@@ -158,4 +187,10 @@ h3 {
 
 #volver_menu:active {
     transform: scale(0.98);
+}
+
+@media (max-width: 600px) {
+    #menu {
+        grid-template-columns: 1fr; /* en móviles, una columna */
+    }
 }

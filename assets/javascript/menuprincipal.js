@@ -1,13 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const userData = localStorage.getItem('user');
     const nombreUsuario = document.getElementById('nombre_usuario');
-
     if (userData) {
+        
         try {
             const usuario = JSON.parse(userData);
             nombreUsuario.textContent = usuario.nombre_usuario
                 ? usuario.nombre_usuario
                 : "Usuario";
+            localStorage.setItem('user', JSON.stringify({
+                id_usuario: usuario.id_usuario,
+                nombre_usuario: usuario.nombre_usuario
+            }));
         } catch (err) {
             console.error("Error al leer el usuario:", err);
             nombreUsuario.textContent = "Usuario";
