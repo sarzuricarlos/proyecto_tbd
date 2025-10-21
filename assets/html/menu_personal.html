@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/menu_principal.css">
+    <title>Menu principal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/menuprincipal.js"></script>
+</head>
+<body>
+    <header>Bash Academy</header>
+    <h3>ELIGE UNA CATEGORIA</h3>
+    <article id="menu">
+        <button type="button" class="boton_menu" onclick="location.href='datos-personales.html'">
+            <img src="../icons/people_datos.svg" alt="">
+            <span>Datos personales</span>
+        </button>
+        <button type="button" class="boton_menu" onclick="location.href='eventos.html'">
+            <img src="../icons/calendar_horario.svg" alt="">
+            <span>Horarios</span>
+        </button>
+        <button type="button" class="boton_menu" onclick="location.href='cursos.html'">
+            <img src="../icons/book_curso.svg" alt="">
+            <span>Cursos</span>
+        </button>
+        <button type="button" class="boton_menu" onclick="location.href='foros.html'">
+            <img src="../icons/notes-notas.svg" alt="">
+            <span>Notas</span>
+        </button>
+        <button type="button" class="boton_menu" onclick="location.href='ranking.html'">
+            <img src="../icons/class_aula.svg" alt="">
+            <span>Pedir aula</span>
+        </button>
+        <button type="button" class="boton_menu" onclick="location.href='recompensas.html'">
+            <img src="../icons/people_foros.svg" alt="">
+            <span>Foro</span>
+        </button>
+    </article>
+    <footer id="iconos_redes_sociales">
+        <button id="cerrar_sesion" type="button" class="boton_menu">Cerrar Sesión</button>
+        <nav>
+            <img src="../icons/instagram.svg" alt="">
+            <img src="../icons/facebook.svg" alt="">
+            <img src="../icons/twitter.svg" alt="">
+        </nav>
+        <h3 id="nombre_usuario"></h3>
+    </footer>
+</body>
+</html>

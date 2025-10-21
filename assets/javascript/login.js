@@ -1,7 +1,7 @@
 async function login() {
     const correo = document.getElementById('name_user').value.trim();
     const contrasena = document.getElementById('contra_user').value.trim();
-
+    
     if (!correo || !contrasena) {
         showMessage('⚠️ Por favor ingresa correo y contraseña.', 'error', 'inicio');
         return;
@@ -14,17 +14,24 @@ async function login() {
         });
 
         if (error) {
-            showMessage('❌ Error al iniciar sesión.', 'error', 'inicio');
+            showMessage('❌ Error al iniciar sesión: ' + error.message, 'error', 'inicio');
             return;
         }
 
         if (data && data.length > 0) {
             const usuario = data[0];
-            showMessage('✅ Bienvenido ' + usuario.nombre_usuario, 'success', 'inicio');
+            
+            const mensajeBienvenida = usuario.nombre_rol 
+                ? `✅ Bienvenido ${usuario.nombre_usuario} (${usuario.nombre_rol})`
+                : `✅ Bienvenido ${usuario.nombre_usuario}`;
+            
+            showMessage(mensajeBienvenida, 'success', 'inicio');
             localStorage.setItem('user', JSON.stringify(usuario));
+            
             setTimeout(() => {
-                window.location.href = 'assets/html/menuprincipal.html';
+                redirectByRole(usuario.id_rol);
             }, 1000);
+            
         } else {
             showMessage('❌ Usuario o contraseña incorrectos.', 'error', 'inicio');
         }
@@ -34,6 +41,16 @@ async function login() {
     }
 }
 
+function redirectByRole(idRol) {
+    const routes = {
+        1: 'assets/html/menuprincipal.html',      // Estudiante
+        2: 'assets/html/menu_administrador.html',    // Administrador
+        3: 'assets/html/menu_personal.html'   // Personal (Profesor)
+    };
+    
+    const route = routes[idRol] || routes[1]; // Default: Estudiante
+    window.location.href = route;
+}
 async function register() {
     const nombre_usuario = document.getElementById('reg_nombre').value.trim();
     const apellido = document.getElementById('reg_apellido').value.trim();
