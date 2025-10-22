@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h3 {
+    color: #fff;
+    text-align: center;
+}
+
+body {
+    background-image: url(../img/fondo_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+th {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+#usuarios {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 1000px;
+    color: #7b7b7b;
+}
+
+/* ======== TABLA ======== */
+#tabla_usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#tabla_usuarios thead {
+    background-color: #00000063;
+}
+
+#tabla_usuarios th {
+    padding: 12px;
+    color: #f8fafc;
+    font-weight: bold;
+}
+
+#tabla_usuarios tbody tr {
+    background-color: #1e293b;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+#tabla_usuarios tbody tr:nth-child(odd) {
+    background-color: #273449;
+}
+
+#tabla_usuarios td {
+    padding: 10px;
+    border-bottom: 1px solid #334155;
+}
+
+#tabla_usuarios tbody tr:hover {
+    background-color: #334155;
+}
+
+/* ESTILOS PARA LOS INPUTS EDITABLES */
+input[type="text"], 
+input[type="email"], 
+input[type="date"], 
+select {
+    width: 100% !important;
+    padding: 8px !important;
+    border: 2px solid #007bff !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    font-size: 14px !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* Asegurar que los inputs sean visibles y clickeables */
+#cuerpo_tabla_usuarios input,
+#cuerpo_tabla_usuarios select {
+    pointer-events: all !important;
+    cursor: text !important;
+}
+
+/* Remover cualquier estilo que bloquee la interacción */
+#cuerpo_tabla_usuarios tr.seleccionado td {
+    background-color: #e8f4fd !important;
+    position: relative;
+}
+
+/* Forzar que los inputs sean interactivos */
+#cuerpo_tabla_usuarios td {
+    position: relative;
+}
+
+#cuerpo_tabla_usuarios td * {
+    pointer-events: auto !important;
+}
+
+/* ======== BOTONES ======== */
+#botones_usuarios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 15px;
+}
+
+button {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: rgba(105, 105, 105, 0.304);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Ocultar botones secundarios al inicio */
+#guardar_cambios,
+#cancelar_cambios {
+    display: none;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 600px) {
+    #tabla_usuarios th, #tabla_usuarios td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    #usuarios {
+        padding: 1.2rem;
+    }
+}

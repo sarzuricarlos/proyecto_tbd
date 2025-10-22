@@ -1,22 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const btnMenu = document.getElementById("volver_menu");
+        if (!verificarSupabase()) return;
 
-        if (!supabase) {
-            console.error("Supabase no está inicializado.");
-            return;
-        }
-        btnMenu.addEventListener("click", () => {
-            window.location.href = "./menuprincipal.html";
-        });
+        // Tu código específico de foros aquí...
+        const { data, error } = await supabase
+            .from('foro')
+            .select('*')
+            .order('fecha_creacion', { ascending: false });
 
+        if (error) throw error;
+
+        // Cargar foros...
+        
     } catch (err) {
-        console.error("Error en el ranking:", err.message);
-        const tablaCuerpo = document.getElementById("cuerpo_tabla_ranking");
-        if (tablaCuerpo) {
-            const fila = document.createElement("tr");
-            fila.innerHTML = `<td colspan="3">Error al cargar el ranking.</td>`;
-            tablaCuerpo.appendChild(fila);
-        }
+        console.error("Error en foros:", err.message);
+        showMessage("Error al cargar los foros", "error");
     }
 });

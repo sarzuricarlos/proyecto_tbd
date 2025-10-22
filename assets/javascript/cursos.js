@@ -1,27 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const btnMenuPrincipal = document.getElementById("volver_menu");
+    // ✅ VERIFICACIONES AUTOMÁTICAS con common.js
+    if (!verificarSupabase()) return;
+    const user = await verificarAutenticacion();
+    if (!user) return;
+
+    // ✅ ELEMENTOS DEL DOM
     const btnDisponibles = document.getElementById("boton_disponibles");
     const btnHorario = document.getElementById("boton_horario");
-
     const seccionMenu = document.getElementById("menu");
     const seccionCursos = document.getElementById("seccion_cursos");
     const seccionHorario = document.getElementById("seccion_horario");
-
     const tablaCursos = document.getElementById("tabla_cursos_disponibles");
     const tablaHorario = document.getElementById("tabla_horario_usuario");
-
     const btnVolverCursos = document.querySelector("#volver_disponibles button");
     const btnVolverHorario = document.querySelector("#volver_horario button");
-
-    if (!supabase) {
-        console.error("❌ Supabase no está inicializado.");
-        return;
-    }
-
-    // 🔹 Menú principal
-    btnMenuPrincipal.addEventListener("click", () => {
-        window.location.href = "./menuprincipal.html";
-    });
 
     // ============================================================
     // 🔹 Mostrar cursos disponibles
@@ -45,7 +37,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // Crear encabezado
             tablaCursos.innerHTML = `
                 <thead>
                     <tr>
@@ -74,12 +65,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
         } catch (err) {
             console.error("Error al cargar cursos:", err.message);
+            showMessage("Error al cargar los cursos disponibles", "error");
             tablaCursos.innerHTML = `<tr><td style="color:white;">Error al cargar los cursos disponibles.</td></tr>`;
         }
     }
 
     // ============================================================
-    // 🔹 Mostrar horario del usuario (procedimiento almacenado)
+    // 🔹 Mostrar horario del usuario
     // ============================================================
     async function mostrarHorarioUsuario() {
         seccionMenu.style.display = "none";
@@ -88,18 +80,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         tablaHorario.innerHTML = "";
 
         try {
-            const userData = localStorage.getItem("user");
-            if (!userData) {
-                alert("⚠️ No hay sesión activa. Redirigiendo al inicio...");
-                window.location.href = "../../index.html";
-                return;
-            }
-
-            const usuario = JSON.parse(userData);
-            const idUsuario = usuario.id_usuario;
-
             const { data, error } = await supabase.rpc("sp_horario_semana_actual", {
-                p_id_usuario: idUsuario
+                p_id_usuario: user.id_usuario // ✅ user ya viene de common.js
             });
 
             if (error) throw error;
@@ -109,7 +91,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
-            // Crear encabezado
             tablaHorario.innerHTML = `
                 <thead>
                     <tr>
@@ -136,12 +117,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             `;
         } catch (err) {
             console.error("Error al cargar horario:", err.message);
+            showMessage("Error al cargar tu horario", "error");
             tablaHorario.innerHTML = `<tr><td style="color:white;">Error al cargar tu horario.</td></tr>`;
         }
     }
 
     // ============================================================
-    // 🔹 Eventos
+    // 🔹 EVENTOS
     // ============================================================
     btnDisponibles.addEventListener("click", mostrarCursosDisponibles);
     btnHorario.addEventListener("click", mostrarHorarioUsuario);

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/usuarios.css">
+    <title>Gestión de Usuarios</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
+    <script src="../javascript/usuarios.js"></script>
+</head>
+<body>
+    <header>Bash Academy</header>
+    <h3>Gestión de Usuarios</h3>
+
+    <article id="usuarios">
+        <table id="tabla_usuarios">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de usuario</th>
+                    <th>Nombre completo</th>
+                    <th>Correo</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo_tabla_usuarios">
+                <!-- Cargado dinámicamente -->
+            </tbody>
+        </table>
+    </article>
+
+    <footer id="botones_usuarios">
+        <button type="button" id="guardar_cambios" style="display: none;">Guardar cambios</button>
+        <button type="button" id="cancelar_edicion" style="display: none;">Cancelar</button>
+        <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
+</body>
+</html>

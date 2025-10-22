@@ -1,22 +1,17 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const btnMenu = document.getElementById("volver_menu");
-
-        if (!supabase) {
-            console.error("Supabase no está inicializado.");
-            return;
-        }
-        btnMenu.addEventListener("click", () => {
-            window.location.href = "./menuprincipal.html";
-        });
-
-    } catch (err) {
-        console.error("Error en el ranking:", err.message);
-        const tablaCuerpo = document.getElementById("cuerpo_tabla_ranking");
-        if (tablaCuerpo) {
-            const fila = document.createElement("tr");
-            fila.innerHTML = `<td colspan="3">Error al cargar el ranking.</td>`;
-            tablaCuerpo.appendChild(fila);
-        }
-    }
+    // ✅ VERIFICACIONES AUTOMÁTICAS con common.js
+    if (!verificarSupabase()) return;
+    await verificarAutenticacion(); // Solo verifica, no necesita el user aquí
+    
+    // ✅ EL RESTO DEL CÓDIGO ESPECÍFICO DE EVENTOS IRÍA AQUÍ
+    // Por ejemplo:
+    // - Cargar eventos desde la base de datos
+    // - Mostrar eventos en una tabla
+    // - Permitir inscripción a eventos
+    // - etc.
+    
+    console.log("✅ Página de eventos cargada correctamente");
+    
+    // ✅ EL BOTÓN "VOLVER_MENU" SE CONFIGURA AUTOMÁTICAMENTE EN COMMON.JS
+    // ✅ NO necesitas configurarlo manualmente
 });

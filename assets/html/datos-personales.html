@@ -1,46 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
     <link rel="stylesheet" href="../css/datos_personales.css">
     <title>Datos personales</title>
+
+    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
     <script src="../javascript/datos_personales.js"></script>
 </head>
 <body>
     <header>Bash Academy</header>
     <h3>Datos personales</h3>
+
     <article id="datos_personales">
+        <!-- Foto de perfil -->
         <nav id="foto_perfil">
             <img id="foto_perfil_usu" src="" alt="Foto de perfil">
             <input type="file" id="input_foto" accept="image/*" style="display: none;">
             <span>Foto de perfil</span>
         </nav>
+
+        <!-- Datos personales -->
         <div id="contenedor_datos">
-            <nav id="nombre">
-                <span>Nombre</span>
-                <input type="text" id="nombre_usu" disabled></input>
+            <!-- ✅ NUEVO: Mostrar nombre de usuario -->
+            <nav class="campo_dato">
+                <span>Nombre de usuario</span>
+                <input type="text" id="nombre_usu" disabled>
             </nav>
-            <nav id="apellidos">
-                <span>Apellidos</span>
-                <input type="text" id="apellidos_usu" disabled></input>
+
+            <!-- ✅ CORREGIDO: Cambiar button por input -->
+            <nav class="campo_dato">
+                <span>Nombre completo</span>
+                <input type="text" id="apellidos_usu" disabled>
             </nav>
-            <nav id="email">
+
+            <nav class="campo_dato">
                 <span>Email</span>
-                <input type="email" id="email_usu" disabled></input>
+                <input type="email" id="email_usu" disabled>
             </nav>
-            <nav id="nacimiento">
+
+            <nav class="campo_dato">
                 <span>Fecha de nacimiento</span>
-                <input type="date" id="nacimiento_usu" disabled></input>
+                <input type="date" id="nacimiento_usu" disabled>
             </nav>
-        <div id="botones_datos">
-            <button type="button" id="boton_editar_datos">Editar datos</button>
-            <button type="button" id="boton_cancelar">Cancelar</button>
-            <button type="button" id="volver_menu">Menú principal</button>
-        </div>
+
+            <!-- Botones -->
+            <div id="botones_datos">
+                <button type="button" class="boton" id="boton_editar_datos">Editar datos</button>
+                <button type="button" class="boton" id="boton_guardar" style="display: none;">Guardar cambios</button>
+                <button type="button" class="boton" id="boton_cancelar" style="display: none;">Cancelar</button>
+                <button type="button" class="boton" id="volver_menu">Menú principal</button>
+            </div>
         </div>
     </article>
 </body>

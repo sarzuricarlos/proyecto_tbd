@@ -116,7 +116,7 @@ span {
     display:none;
 }
 
-#boton_editar_datos,#volver_menu,#boton_cancelar {
+#boton_editar_datos,#boton_guardar,#volver_menu,#boton_cancelar {
     padding: 10px 25px;
     margin-top: 10px;
     background-color: #000000;
@@ -127,6 +127,11 @@ span {
 }
 
 #boton_editar_datos:hover {
+    cursor: pointer;
+    background-color: #444;
+}
+
+#boton_guardar:hover {
     cursor: pointer;
     background-color: #444;
 }
