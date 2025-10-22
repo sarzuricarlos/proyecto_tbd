@@ -94,51 +94,56 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 🔹 Cargar aulas reservadas
-    async function cargarAulasReservadas() {
-        try {
-            const user = JSON.parse(localStorage.getItem("user"));
-            const { data, error } = await supabase.rpc('sp_aulas_reservadas_usuario', {
-                p_id_usuario: user.id_usuario
-            });
+// 🔹 Cargar TODAS las aulas reservadas (solo datos de reserva_aula)
+async function cargarAulasReservadas() {
+    try {
+        const { data, error } = await supabase.rpc('sp_todas_aulas_reservadas');
 
-            if (error) throw error;
+        if (error) throw error;
 
-            tablaReservadas.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>Aula</th>
-                        <th>Ubicación</th>
-                        <th>Fecha</th>
-                        <th>Hora Inicio</th>
-                        <th>Hora Fin</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${data.length === 0 ? 
-                        '<tr><td colspan="6">No tienes aulas reservadas</td></tr>' : 
-                        data.map(reserva => `
-                            <tr>
-                                <td>${reserva.nombre_aula}</td>
-                                <td>${reserva.ubicacion}</td>
-                                <td>${reserva.fecha_reserva}</td>
-                                <td>${reserva.hora_inicio}</td>
-                                <td>${reserva.hora_fin}</td>
-                                <td>${reserva.estado_reserva === 1 ? 'Reservada' : 'Cancelada'}</td>
-                            </tr>
-                        `).join('')
-                    }
-                </tbody>
-            `;
+        console.log("📊 Todas las aulas reservadas:", data);
 
-        } catch (err) {
-            console.error("Error cargando aulas reservadas:", err);
-            tablaReservadas.innerHTML = `
-                <tr><td colspan="6">Error al cargar aulas reservadas</td></tr>
-            `;
-        }
+        tablaReservadas.innerHTML = `
+            <thead>
+                <tr>
+                    <th>ID Reserva</th>
+                    <th>ID Aula</th>
+                    <th>ID Curso</th>
+                    <th>Fecha</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${data.length === 0 ? 
+                    '<tr><td colspan="7">No hay aulas reservadas</td></tr>' : 
+                    data.map(reserva => `
+                        <tr>
+                            <td>${reserva.id_reserva}</td>
+                            <td>${reserva.id_aula}</td>
+                            <td>${reserva.id_curso}</td>
+                            <td>${new Date(reserva.fecha_reserva).toLocaleDateString()}</td>
+                            <td>${reserva.hora_inicio}</td>
+                            <td>${reserva.hora_fin}</td>
+                            <td>
+                                <span class="estado-${reserva.estado_reserva === 1 ? 'activo' : 'cancelado'}">
+                                    ${reserva.estado_reserva === 1 ? '✅ Reservada' : '❌ Cancelada'}
+                                </span>
+                            </td>
+                        </tr>
+                    `).join('')
+                }
+            </tbody>
+        `;
+
+    } catch (err) {
+        console.error("Error cargando aulas reservadas:", err);
+        tablaReservadas.innerHTML = `
+            <tr><td colspan="7">Error al cargar aulas reservadas: ${err.message}</td></tr>
+        `;
     }
+}
 
     // 🔹 Mostrar modal para reservar aula (ACTUALIZADA)
     function mostrarModalReserva(idAula, nombreAula) {

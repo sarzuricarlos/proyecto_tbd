@@ -78,6 +78,10 @@ header {
     background-color: #334155;
 }
 
+#cuerpo_tabla_eventos {
+    color: #c8c8c8;
+}
+
 /* ======== BOTÓN ======== */
 #botones_eventos {
     display: flex;
