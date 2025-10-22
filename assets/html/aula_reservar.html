@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/aulas.css">
+    <title>Aulas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
+    <script defer src="../javascript/aulas.js"></script>
+</head>
+<body>
+    <header>Bash Academy</header>
+    <h3>Aulas</h3>
+
+    <!-- 🔹 Menú principal de Aulas -->
+    <article id="menu_aulas">
+        <button type="button" class="boton_menu" id="boton_disponibles">
+            <img src="../icons/blackboard_pedir_aula.svg" alt="">
+            <span>Aulas disponibles</span>
+        </button>
+        <button type="button" class="boton_menu" id="boton_reservadas">
+            <img src="../icons/leave_aula_reservada.svg" alt="">
+            <span>Aulas reservadas</span>
+        </button>
+    </article>
+
+    <!-- 🔹 Contenedor de aulas disponibles -->
+    <section id="seccion_aulas_disponibles" style="display: none;">
+        <table class="tabla_aulas" id="tabla_aulas_disponibles"></table>
+        <div id="volver_disponibles" class="contenedor_volver">
+            <button id="btn_volver_disponibles" class="btn-volver">Volver</button>
+        </div>
+    </section>
+
+    <!-- 🔹 Contenedor de aulas reservadas -->
+    <section id="seccion_aulas_reservadas" style="display: none;">
+        <table class="tabla_aulas" id="tabla_aulas_reservadas"></table>
+        <div id="volver_reservadas" class="contenedor_volver">
+            <button id="btn_volver_reservadas" class="btn-volver">Volver</button>
+        </div>
+    </section>
+
+    <footer id="botones_aulas">
+        <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
+</body>
+</html>
