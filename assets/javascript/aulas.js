@@ -97,6 +97,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 // 🔹 Cargar TODAS las aulas reservadas (solo datos de reserva_aula)
 async function cargarAulasReservadas() {
     try {
+        await supabase.rpc('sp_actualizar_reservas_vencidas');
+        
         const { data, error } = await supabase.rpc('sp_todas_aulas_reservadas');
 
         if (error) throw error;
@@ -123,9 +125,9 @@ async function cargarAulasReservadas() {
                             <td>${reserva.id_reserva}</td>
                             <td>${reserva.id_aula}</td>
                             <td>${reserva.id_curso}</td>
-                            <td>${new Date(reserva.fecha_reserva).toLocaleDateString()}</td>
+                            <td>${reserva.fecha_reserva}</td>
                             <td>${reserva.hora_inicio}</td>
-                            <td>${reserva.hora_fin}</td>
+                            <td>${reserva.hora_fin}</td>    
                             <td>
                                 <span class="estado-${reserva.estado_reserva === 1 ? 'activo' : 'cancelado'}">
                                     ${reserva.estado_reserva === 1 ? '✅ Reservada' : '❌ Cancelada'}

@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Supabase no está inicializado.");
             return;
         }
-
-        const { data, error } = await supabase.rpc('sp_ranking_mejores_notas');
+        const { data, error } = await supabase.rpc('sp_obtener_ranking_estudiantes');
 
         if (error) throw error;
 
@@ -27,17 +26,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                 else if (index === 1) clasePosicion = "plata";
                 else if (index === 2) clasePosicion = "bronce";
 
-                fila.classList.add(clasePosicion);
+                // ✅ SOLUCIÓN: Solo agregar la clase si no está vacía
+                if (clasePosicion) {
+                    fila.classList.add(clasePosicion);
+                }
 
+                // ✅ USAR LOS CAMPOS CORRECTOS del nuevo procedimiento
                 fila.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${usuario.nombre_usuario} ${usuario.apellido}</td>
-                    <td>${usuario.notas}</td>
+                    <td>${usuario.posicion}</td>
+                    <td>${usuario.nombre_usuario}</td>  <!-- Solo nombre, sin apellido -->
+                    <td>${usuario.puntuacion_total}</td>  <!-- puntuacion_total en lugar de notas -->
                 `;
 
                 tablaCuerpo.appendChild(fila);
             });
         }
+
         btnMenu.addEventListener("click", () => {
             window.location.href = "./menuprincipal.html";
         });

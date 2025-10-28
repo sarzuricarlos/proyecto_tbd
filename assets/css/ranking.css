@@ -82,6 +82,39 @@ th {
     background-color: #334155;
 }
 
+tr.oro {
+    background: linear-gradient(135deg, #FFD700, #FFEC8B) !important;
+    font-weight: bold;
+    color: #8B7500;
+}
+
+tr.oro td {
+    border-bottom: 2px solid #DAA520;
+}
+
+/* 🥈 PLATA - Segundo lugar */
+tr.plata {
+    background: linear-gradient(135deg, #C0C0C0, #E8E8E8) !important;
+    font-weight: bold;
+    color: #696969;
+}
+
+tr.plata td {
+    border-bottom: 2px solid #A9A9A9;
+}
+
+/* 🥉 BRONCE - Tercer lugar */
+tr.bronce {
+    background: linear-gradient(135deg, #CD7F32, #E8B886) !important;
+    font-weight: bold;
+    color: #8B4513;
+}
+
+tr.bronce td {
+    border-bottom: 2px solid #8B4513;
+}
+
+
 #botones_ranking {
     display: flex;
     justify-content: center;
