@@ -1,0 +1,180 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-image: url(../img/fondo_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+h3 {
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* 🔹 Menú principal de notas */
+#menu_notas {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(12px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    justify-items: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.boton_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid #ffffff00;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 200px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton_menu:hover {
+    transform: translateY(-4px);
+    background: rgba(0, 0, 0, 0.504);
+}
+
+.boton_menu img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.boton_menu span {
+    font-size: 1rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* 🔹 Tablas para notas */
+.tabla_notas {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+.tabla_notas th {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 10px;
+}
+
+.tabla_notas td {
+    color: #f1f5f9;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla_notas tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tabla_notas tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 🔹 Botón de volver y pie de página */
+#botones_notas {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+#volver_menu {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#volver_menu:hover {
+    background-color: rgba(105, 105, 105, 0.304);
+    transform: scale(1.05);
+}
+
+#volver_menu:active {
+    transform: scale(0.98);
+}
+
+/* 🔹 Contenedor centrado del botón "Volver" */
+.contenedor_volver {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+/* 🔹 Botón "Volver" (mismo estilo que #volver_menu del footer) */
+.btn-volver {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-volver:hover {
+    background-color: rgba(105, 105, 105, 0.304);
+    transform: scale(1.05);
+}
+
+.btn-volver:active {
+    transform: scale(0.98);
+}
+
+/* 🔹 Responsive */
+@media (max-width: 600px) {
+    #menu_notas {
+        grid-template-columns: 1fr;
+    }
+}

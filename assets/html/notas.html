@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/notas.css">
+    <title>Notas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
+    <script defer src="../javascript/notas.js"></script>
+</head>
+<body>
+    <header>Bash Academy</header>
+    <h3>Notas</h3>
+
+    <!-- 🔹 Menú principal de Notas -->
+    <article id="menu_notas">
+        <button type="button" class="boton_menu" id="boton_subir_notas">
+            <img src="../icons/blackboard_pedir_aula.svg" alt="">
+            <span>Subir notas</span>
+        </button>
+        <button type="button" class="boton_menu" id="boton_cambiar_notas">
+            <img src="../icons/change_cambiar_notas.svg" alt="">
+            <span>Cambiar notas</span>
+        </button>
+    </article>
+
+    <!-- 🔹 Contenedor para subir notas -->
+    <section id="seccion_subir_notas" style="display: none;">
+        <table class="tabla_notas" id="tabla_subir_notas"></table>
+        <div id="volver_subir_notas" class="contenedor_volver">
+            <button id="btn_volver_subir_notas" class="btn-volver">Volver</button>
+        </div>
+    </section>
+
+    <!-- 🔹 Contenedor de notas subidas -->
+    <section id="seccion_cambiar_notas" style="display: none;">
+        <table class="tabla_notas" id="tabla_cambiar_notas"></table>
+        <div id="volver_cambiar_notas" class="contenedor_volver">
+            <button id="btn_volver_cambiar_notas" class="btn-volver">Volver</button>
+        </div>
+    </section>
+
+    <footer id="botones_notas">
+        <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
+</body>
+</html>
