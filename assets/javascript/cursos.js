@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tablaCursos = document.getElementById("tabla_cursos_disponibles");
     const tablaHorario = document.getElementById("tabla_horario_usuario");
 
-    const btnVolverCursos = document.getElementById("btn_volver_disponibles");
-    const btnVolverHorario = document.getElementById("btn_volver_horario");
+    const btnVolverCursos = document.getElementById('btn_volver_disponibles');
+    const btnVolverHorario = document.getElementById('btn_volver_horario');
 
     // Verificar que los elementos existen
     if (!btnDisponibles || !btnHorario || !seccionMenu || !seccionCursos || !seccionHorario || !tablaCursos || !tablaHorario) {
@@ -250,18 +250,26 @@ document.addEventListener("DOMContentLoaded", async () => {
     btnDisponibles.addEventListener("click", mostrarCursosDisponibles);
     btnHorario.addEventListener("click", mostrarHorarioUsuario);
 
-    if (btnVolverCursos) {
-        btnVolverCursos.addEventListener("click", () => {
+   if (btnVolverCursos) {
+        btnVolverCursos.addEventListener('click', () => {
+            console.log("🔍 DEBUG: Botón volver cursos clickeado");
             seccionCursos.style.display = "none";
-            seccionMenu.style.display = "flex";
+            // Restaurar el display del menú al que definiste en CSS (mejor '' para respetar CSS)
+            seccionMenu.style.display = ""; // <- permite que el CSS (grid) tome efecto
+            // si tu CSS necesita forzar grid: seccionMenu.style.display = "grid";
         });
+    } else {
+        console.warn("⚠️ No se encontró btnVolverCursos");
     }
 
     if (btnVolverHorario) {
-        btnVolverHorario.addEventListener("click", () => {
+        btnVolverHorario.addEventListener('click', () => {
+            console.log("🔍 DEBUG: Botón volver horario clickeado");
             seccionHorario.style.display = "none";
-            seccionMenu.style.display = "flex";
+            seccionMenu.style.display = ""; // o 'grid'
         });
+    } else {
+        console.warn("⚠️ No se encontró btnVolverHorario");
     }
 
     console.log("✅ Cursos.js cargado correctamente");
