@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/recompensas.css">
+    <title>Recompensas</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
+    <script defer src="../javascript/recompensas.js"></script>
 </head>
 <body>
-    
+    <header>Bash Academy</header>
+    <h3>Recompensas</h3>
+
+    <!-- 🔹 Menú principal de recompensas -->
+    <article id="menu_recompensas">
+        <button type="button" class="boton_menu" id="boton_disponibles">
+            <img src="../icons/reward_disponible.svg" alt="">
+            <span>Recompensas disponibles</span>
+        </button>
+        <button type="button" class="boton_menu" id="boton_canjeadas">
+            <img src="../icons/reward_canjeadas.svg" alt="">
+            <span>Recompensas canjeadas</span>
+        </button>
+    </article>
+
+    <!-- 🔹 Contenedor para recompensas disponibles -->
+    <section id="seccion_recompensas_disponibles" style="display: none;">
+        <table class="tabla_recompensas" id="tabla_recompensas_disponibles"></table>
+        <div id="volver_disponibles" class="contenedor_volver">
+            <button class="btn-volver" id="btn_volver_disponibles">Volver</button>
+        </div>
+    </section>
+
+    <!-- 🔹 Contenedor para recompensas canjeadas -->
+    <section id="seccion_recompensas_canjeadas" style="display: none;">
+        <table class="tabla_recompensas" id="tabla_recompensas_canjeadas"></table>
+        <div id="volver_canjeadas" class="contenedor_volver">
+            <button class="btn-volver" id="btn_volver_canjeadas">Volver</button>
+        </div>
+    </section>
+
+    <footer id="botones_recompensas">
+        <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
 </body>
 </html>
