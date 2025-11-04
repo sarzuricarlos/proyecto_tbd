@@ -6,10 +6,9 @@
 }
 
 body {
-    background-image: url(../img/fondo_inicio.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-image: url(../gifs/fondo_admin.gif);
     background-position: center;
+    background-size: cover;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,7 +18,7 @@ body {
 }
 
 header {
-    color: #fff;
+    color: #ffffff;
     font-size: 2.5em;
     font-weight: 700;
     text-transform: uppercase;
@@ -28,7 +27,7 @@ header {
 }
 
 h3 {
-    color: #fff;
+    color: #ffffff;
     font-size: 1.25em;
     font-weight: 700;
     text-transform: uppercase;
@@ -86,10 +85,10 @@ h3 {
 #iconos_redes_sociales {
     margin-top: 3em;
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* 3 columnas */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding: 10px 20px;
-    background: transparent; /* o el color que quieras */
+    background: transparent;
     position: relative;
     width: 100%;
 }
@@ -117,7 +116,7 @@ h3 {
 #iconos_redes_sociales button {
     grid-column: 1; /* Columna izquierda */
     justify-self: start; /* Alineado al borde izquierdo */
-    color: #fff; /* o el color que combine con tu fondo */
+    color: #ffffff; /* o el color que combine con tu fondo */
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
@@ -126,7 +125,7 @@ h3 {
 #iconos_redes_sociales h3 {
     grid-column: 3; /* Columna derecha */
     justify-self: end; /* Alineado al borde derecho */
-    color: #fff; /* o el color que combine con tu fondo */
+    color: #ffffff; /* o el color que combine con tu fondo */
     font-size: 1rem;
     font-weight: 600;
     margin: 0;

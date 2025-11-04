@@ -65,13 +65,14 @@ document.addEventListener("DOMContentLoaded", () => {
         toggle.addEventListener("click", () => {
             const targetId = toggle.getAttribute("data-target");
             const input = document.getElementById(targetId);
+            const img = toggle.querySelector("img");
 
             if (input.type === "password") {
+                img.src = 'assets/icons/eye_contra_abierto.svg';
                 input.type = "text";
-                toggle.src = "assets/icons/eye_contra_abierto.svg";
             } else {
+                img.src = 'assets/icons/eye_contra_cerrado.svg';
                 input.type = "password";
-                toggle.src = "assets/icons/eye_contra_cerrado.svg";
             }
         });
     });

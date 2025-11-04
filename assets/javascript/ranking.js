@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         tablaCuerpo.innerHTML = "";
 
         if (data.length === 0) {
+            console.log("🟢 Datos recibidos del ranking:", data);
+console.log("🟠 Error (si hay):", error);
             const fila = document.createElement("tr");
             fila.innerHTML = `<td colspan="3">No hay evaluaciones en el ranking.</td>`;
             tablaCuerpo.appendChild(fila);
@@ -34,8 +36,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // ✅ USAR LOS CAMPOS CORRECTOS del nuevo procedimiento
                 fila.innerHTML = `
                     <td>${usuario.posicion}</td>
-                    <td>${usuario.nombre_usuario}</td>  <!-- Solo nombre, sin apellido -->
-                    <td>${usuario.puntuacion_total}</td>  <!-- puntuacion_total en lugar de notas -->
+                    <td>${usuario.nombre_usuario}</td>
+                    <td>${Math.round(usuario.puntuacion_promedio)}</td> 
                 `;
 
                 tablaCuerpo.appendChild(fila);

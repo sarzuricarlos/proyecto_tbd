@@ -114,6 +114,41 @@ h3 {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.contenedor-boton {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#btn_volver_disponibles {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#btn_volver_disponibles:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+#btn_volver_disponibles:active {
+    transform: scale(0.98);
+}
+
+#seccion_cursos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* centra verticalmente */
+    width: 100%;
+    min-height: 80vh; /* evita que quede demasiado pequeño */
+}
 #iconos_redes_sociales {
     margin-top: 3em;
     display: grid;
