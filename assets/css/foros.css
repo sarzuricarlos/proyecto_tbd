@@ -37,21 +37,30 @@ h3 {
     text-align: center;
 }
 
-#eventos {
+h4, h5 {
+    color: #fff;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Estilos para ambas vistas (lista de foros y comentarios) */
+#eventos, #comentarios_foro {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
     padding: 2rem;
     margin-top: 1.5rem;
     width: 90%;
-    max-width: 700px;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
+/* Tabla de foros */
 #tabla_eventos {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    table-layout: fixed;
 }
 
 #tabla_eventos thead {
@@ -59,7 +68,7 @@ h3 {
 }
 
 #tabla_eventos th {
-    padding: 12px;
+    padding: 10px;
     color: #f8fafc;
     font-weight: bold;
     text-align: center;
@@ -69,6 +78,7 @@ h3 {
 #tabla_eventos tbody tr {
     background-color: #1e293b;
     transition: background-color 0.3s ease;
+    cursor: pointer;
 }
 
 #tabla_eventos tbody tr:nth-child(odd) {
@@ -85,46 +95,398 @@ h3 {
 
 #tabla_eventos tbody tr:hover {
     background-color: #334155;
+    transform: translateY(-2px);
 }
 
-#botones_eventos {
+/* Información del foro seleccionado */
+#info_foro {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid #fff;
+}
+
+#titulo_foro_seleccionado {
+    color: #fff;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+#descripcion_foro_seleccionado {
+    color: #e2e8f0;
+    line-height: 1.5;
+}
+
+/* Lista de comentarios */
+#lista_comentarios h5 {
+    color: #fff;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+#contenedor_comentarios {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+/* Estilos de scrollbar personalizados */
+#contenedor_comentarios::-webkit-scrollbar {
+    width: 8px;
+}
+
+#contenedor_comentarios::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+#contenedor_comentarios::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+#contenedor_comentarios::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Comentarios individuales */
+.comentario {
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 3px solid #fff;
+    transition: transform 0.2s ease;
+}
+
+.comentario:hover {
+    transform: translateX(5px);
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.info_usuario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nombre_usuario {
+    font-weight: bold;
+    color: #fff;
+    font-size: 1em;
+}
+
+.fecha_comentario {
+    color: #cbd5e1;
+    font-size: 0.9em;
+}
+
+.contenido_comentario {
+    color: #f1f5f9;
+    line-height: 1.5;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+
+/* Contenedor de botones */
+.contenedor_boton_volver {
     display: flex;
     justify-content: center;
-    margin-top: 1.5rem;
+    margin: 20px 0;
+    width: 100%;
 }
 
-#volver_menu {
+/* Botones */
+#volver_a_foros, #volver_menu {
     background-color: hsla(0, 0%, 100%, 0.2);
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 1rem;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 150px;
+    text-align: center;
 }
 
-#volver_menu:hover {
-    background-color: rgba(105, 105, 105, 0.304);
+#volver_a_foros:hover, #volver_menu:hover {
+    background-color: rgba(105, 105, 105, 0.404);
     transform: scale(1.05);
 }
 
-#volver_menu:active {
+#volver_a_foros:active, #volver_menu:active {
     transform: scale(0.98);
 }
 
-@media (max-width: 600px) {
+/* Footer de botones */
+#botones_eventos {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    width: 90%;
+    max-width: 800px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        font-size: 2em;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+    }
+
+    #eventos, #comentarios_foro {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
     #tabla_eventos th, #tabla_eventos td {
         padding: 8px;
         font-size: 0.9rem;
     }
 
-    h3 {
-        font-size: 1.3rem;
+    .info_usuario {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
 
-    #eventos {
-        padding: 1.2rem;
+    .nombre_usuario, .fecha_comentario {
+        font-size: 0.85em;
     }
+
+    .contenido_comentario {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+
+    #volver_a_foros, #volver_menu {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        min-width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 1rem;
+        margin-bottom: 20px;
+    }
+
+    #eventos, #comentarios_foro {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    #tabla_eventos {
+        display: block;
+        overflow-x: auto;
+    }
+
+    #tabla_eventos th, #tabla_eventos td {
+        padding: 6px;
+        font-size: 0.8rem;
+        min-width: 120px;
+    }
+
+    .comentario {
+        padding: 10px;
+    }
+
+    #info_foro {
+        padding: 15px;
+    }
+
+    #titulo_foro_seleccionado {
+        font-size: 1.2em;
+    }
+
+    #contenedor_comentarios {
+        max-height: 300px;
+    }
+
+    #volver_a_foros, #volver_menu {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        min-width: 100px;
+    }
+}
+
+/* Estados de carga y mensajes */
+.comentario:empty::before {
+    content: "Cargando comentarios...";
+    color: #94a3b8;
+    font-style: italic;
+}
+
+#contenedor_comentarios:empty::before {
+    content: "No hay comentarios en este foro.";
+    color: #94a3b8;
+    text-align: center;
+    display: block;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Animaciones suaves */
+#lista_foros, #comentarios_foro {
+    transition: opacity 0.3s ease;
+}
+
+/* Formulario de comentarios */
+#formulario_comentario {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#nuevo_comentario {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+#nuevo_comentario::placeholder {
+    color: #cbd5e1;
+}
+
+#nuevo_comentario:focus {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+#btn_comentar {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+#btn_comentar:hover:not(:disabled) {
+    background-color: rgba(105, 105, 105, 0.404);
+    transform: scale(1.05);
+}
+
+#btn_comentar:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+#btn_comentar:disabled {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#contador_caracteres {
+    color: #cbd5e1;
+    font-size: 0.85em;
+    text-align: right;
+    margin-top: 5px;
+}
+
+#contador_caracteres.alerta {
+    color: #fecaca;
+}
+
+/* Mensajes de estado */
+.mensaje-estado {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mensaje-exito {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.mensaje-error {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Responsive para el formulario */
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+    
+    #btn_comentar {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    #nuevo_comentario {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #formulario_comentario {
+        padding: 15px;
+    }
+    
+    #nuevo_comentario {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    #btn_comentar {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Enfoque para teclado */
+button:focus, #tabla_eventos tbody tr:focus {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
 }

@@ -13,8 +13,10 @@
 </head>
 <body>
     <header>Bash Academy</header>
-    <h3>Foros</h3>
-    <article id="eventos">
+    <h3 id="titulo_pagina">Foros</h3>
+    
+    <!-- Vista de lista de foros -->
+    <article id="lista_foros" style="display: block;">
         <table id="tabla_eventos">
             <thead>
                 <tr>
@@ -27,8 +29,38 @@
             </tbody>
         </table>
     </article>
+
+    <!-- Vista de comentarios del foro -->
+    <article id="comentarios_foro" style="display: none;">
+        <div id="info_foro">
+            <h4 id="titulo_foro_seleccionado"></h4>
+            <p id="descripcion_foro_seleccionado"></p>
+        </div>
+        
+        <div id="lista_comentarios">
+            <h5>Comentarios</h5>
+            <div id="contenedor_comentarios">
+                <!-- Los comentarios se cargarán aquí -->
+            </div>
+        </div>
+
+        <!-- Formulario para nuevo comentario -->
+        <div id="formulario_comentario">
+            <div class="input-group">
+                <input type="text" id="nuevo_comentario" placeholder="Escribe tu comentario..." maxlength="500">
+                <button type="button" id="btn_comentar">Comentar</button>
+            </div>
+            <div id="contador_caracteres">0/500 caracteres</div>
+        </div>
+
+        <!-- Botón Volver centrado -->
+        <div class="contenedor_boton_volver">
+            <button type="button" id="volver_a_foros">Volver a Foros</button>
+        </div>
+    </article>
+
     <footer id="botones_eventos">
-            <button type="button" id="volver_menu">Menú principal</button>
+        <button type="button" id="volver_menu">Menú principal</button>
     </footer>
 </body>
 </html>
