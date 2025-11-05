@@ -170,6 +170,14 @@ document.addEventListener('DOMContentLoaded', function() {
             btnConfirmarParticipar.disabled = true;
             btnConfirmarParticipar.textContent = 'Participando...';
 
+            // ✅ VERIFICACIÓN FINAL ANTES DE INSERTAR
+            const yaParticipa = await verificarParticipacion(eventoSeleccionado);
+            if (yaParticipa) {
+                alert(`Ya estás participando en el evento "${eventoSeleccionado.nombre_evento}"`);
+                cerrarModal();
+                return;
+            }
+
             console.log('Participando en evento:', {
                 id_usuario: usuarioActual.id_usuario,
                 id_evento: eventoSeleccionado.id_evento
@@ -187,6 +195,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 .select();
 
             if (error) {
+                // Si el error es por duplicado (aunque no debería pasar con la verificación)
+                if (error.code === '23505') { // Código de error de unique constraint
+                    alert(`Ya estás participando en el evento "${eventoSeleccionado.nombre_evento}"`);
+                    cerrarModal();
+                    return;
+                }
+                
                 console.error('Error al participar en evento:', error);
                 alert('Error al participar en el evento: ' + error.message);
                 return;
