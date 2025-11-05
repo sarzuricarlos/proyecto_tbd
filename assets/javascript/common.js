@@ -108,7 +108,6 @@ function redirectByRole(idRol) {
     window.location.href = route;
 }
 
-
 /**
  * Configura el botón "Volver al menú" automáticamente
  */
@@ -163,12 +162,26 @@ function showMessage(message, type = 'info', containerId = null) {
         color: ${style.color};
         border: 1px solid ${style.border};
         font-weight: 500;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        max-width: 400px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     `;
 
-    // Auto-ocultar después de 5 segundos
+    // Auto-ocultar después de 8 segundos (más tiempo para notificaciones importantes)
     setTimeout(() => {
-        messageDiv.style.display = 'none';
-    }, 5000);
+        if (messageDiv.parentNode) {
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 500);
+        }
+    }, 8000);
 }
 
 /**
@@ -185,11 +198,214 @@ function verificarSupabase() {
 }
 
 // ================================================
+// 🎯 SISTEMA DE NOTIFICACIONES DE EVENTOS
+// ================================================
+
+// En common.js - actualizar la lógica de comparación de fechas
+async function verificarEventosCercanos() {
+    try {
+        const user = await verificarAutenticacion();
+        if (!user) return;
+
+        // Verificar si ya se mostró la notificación hoy PARA ESTE USUARIO
+        const claveNotificacion = `ultimaNotificacionEventos_${user.id_usuario}`;
+        const ultimaNotificacion = localStorage.getItem(claveNotificacion);
+        const hoy = new Date().toDateString();
+        
+        if (ultimaNotificacion === hoy) {
+            console.log(`🔔 Notificación ya mostrada hoy para usuario ${user.id_usuario}`);
+            return;
+        }
+
+        console.log('🔍 Buscando eventos cercanos...');
+
+        // Obtener eventos en los que el usuario participa
+        const { data: eventosUsuario, error } = await supabase
+            .from('evento_usuario')
+            .select(`
+                evento!inner(
+                    id_evento,
+                    nombre_evento,
+                    fecha_evento,
+                    lugar,
+                    descripcion_evento
+                )
+            `)
+            .eq('id_usuario', user.id_usuario);
+
+        if (error) {
+            console.error('❌ Error al obtener eventos del usuario:', error);
+            return;
+        }
+
+        if (!eventosUsuario || eventosUsuario.length === 0) {
+            console.log('📭 Usuario no participa en ningún evento');
+            return;
+        }
+
+        const hoyDate = new Date();
+        // Normalizar a inicio del día en zona horaria local
+        const hoyNormalizado = new Date(hoyDate.getFullYear(), hoyDate.getMonth(), hoyDate.getDate());
+
+        let eventosHoy = [];
+        let eventosProximos = [];
+
+        eventosUsuario.forEach(item => {
+            const evento = item.evento;
+            
+            // Parsear fecha del evento correctamente
+            const [anio, mes, dia] = evento.fecha_evento.split('-');
+            const fechaEvento = new Date(anio, mes - 1, dia);
+            
+            // Calcular diferencia en días
+            const diferenciaMs = fechaEvento - hoyNormalizado;
+            const diferenciaDias = Math.floor(diferenciaMs / (1000 * 60 * 60 * 24));
+
+            console.log(`Evento: ${evento.nombre_evento}, Fecha: ${evento.fecha_evento}, Días faltantes: ${diferenciaDias}`);
+
+            // Solo eventos futuros o hoy
+            if (diferenciaDias >= 0) {
+                if (diferenciaDias === 0) {
+                    eventosHoy.push(evento);
+                } else if (diferenciaDias <= 3) {
+                    eventosProximos.push({ ...evento, diasFaltantes: diferenciaDias });
+                }
+            }
+        });
+
+        // Mostrar notificaciones
+        if (eventosHoy.length > 0) {
+            mostrarNotificacionEventosHoy(eventosHoy);
+            localStorage.setItem(claveNotificacion, hoy);
+            console.log(`✅ Notificación guardada para usuario ${user.id_usuario}`);
+        } else if (eventosProximos.length > 0) {
+            mostrarNotificacionEventosProximos(eventosProximos);
+            localStorage.setItem(claveNotificacion, hoy);
+            console.log(`✅ Notificación guardada para usuario ${user.id_usuario}`);
+        } else {
+            console.log('📅 No hay eventos cercanos');
+            // También guardamos que ya verificamos para este usuario hoy
+            localStorage.setItem(claveNotificacion, hoy);
+        }
+
+    } catch (error) {
+        console.error('💥 Error en sistema de notificaciones:', error);
+    }
+}
+
+// Función auxiliar para formatear fechas en common.js
+function formatearFechaCommon(fechaString) {
+    if (!fechaString) return '';
+    
+    try {
+        const [anio, mes, dia] = fechaString.split('-');
+        const fecha = new Date(anio, mes - 1, dia);
+        
+        return fecha.toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    } catch (error) {
+        return fechaString;
+    }
+}
+
+/**
+ * Muestra notificación para eventos que son hoy
+ * @param {Array} eventos - Lista de eventos para hoy
+ */
+function mostrarNotificacionEventosHoy(eventos) {
+    let mensaje = '🎉 <strong>¡Eventos para hoy!</strong><br><br>';
+    
+    eventos.forEach((evento, index) => {
+        mensaje += `• <strong>${evento.nombre_evento}</strong><br>`;
+        mensaje += `  📍 ${evento.lugar}<br>`;
+        if (evento.descripcion_evento) {
+            mensaje += `  📝 ${evento.descripcion_evento}<br>`;
+        }
+        if (index < eventos.length - 1) mensaje += '<br>';
+    });
+
+    mensaje += '<br>¡No te lo pierdas!';
+
+    showMessage(mensaje, 'success');
+    
+    // También mostrar alerta nativa para mayor visibilidad
+    if (eventos.length === 1) {
+        const fechaFormateada = formatearFechaCommon(eventos[0].fecha_evento);
+        alert(`🎉 EVENTO HOY: ${eventos[0].nombre_evento}\n📅 ${fechaFormateada}\n📍 ${eventos[0].lugar}`);
+    } else {
+        alert(`🎉 TIENES ${eventos.length} EVENTOS PARA HOY\nRevisa la notificación en pantalla.`);
+    }
+}
+
+/**
+ * Muestra notificación para eventos próximos
+ * @param {Array} eventos - Lista de eventos próximos
+ */
+function mostrarNotificacionEventosProximos(eventos) {
+    let mensaje = '📅 <strong>Eventos próximos</strong><br><br>';
+    
+    eventos.forEach((evento, index) => {
+        const diasTexto = evento.diasFaltantes === 1 ? 'mañana' : `en ${evento.diasFaltantes} días`;
+        const fechaFormateada = formatearFechaCommon(evento.fecha_evento);
+        
+        mensaje += `• <strong>${evento.nombre_evento}</strong><br>`;
+        mensaje += `  📅 ${fechaFormateada} (${diasTexto})<br>`;
+        mensaje += `  📍 ${evento.lugar}<br>`;
+        if (evento.descripcion_evento) {
+            mensaje += `  📝 ${evento.descripcion_evento}<br>`;
+        }
+        if (index < eventos.length - 1) mensaje += '<br>';
+    });
+
+    mensaje += '<br>¡Prepárate!';
+
+    showMessage(mensaje, 'info');
+}
+
+/**
+ * Limpia el historial de notificaciones (útil para testing)
+ */
+function limpiarHistorialNotificaciones() {
+    // Limpiar todas las notificaciones de todos los usuarios
+    const keys = Object.keys(localStorage);
+    keys.forEach(key => {
+        if (key.startsWith('ultimaNotificacionEventos_')) {
+            localStorage.removeItem(key);
+            console.log(`🧹 Notificación eliminada: ${key}`);
+        }
+    });
+    console.log('🧹 Historial de notificaciones limpiado para todos los usuarios');
+}
+
+/**
+ * Limpia el historial de notificaciones solo para el usuario actual
+ */
+async function limpiarMisNotificaciones() {
+    const user = await verificarAutenticacion();
+    if (user) {
+        const claveNotificacion = `ultimaNotificacionEventos_${user.id_usuario}`;
+        localStorage.removeItem(claveNotificacion);
+        console.log(`🧹 Notificaciones limpiadas para usuario ${user.id_usuario}`);
+        alert('Notificaciones limpiadas. Verás notificaciones nuevamente al recargar.');
+    }
+}
+
+// ================================================
 // 🎯 INICIALIZACIÓN AUTOMÁTICA
 // ================================================
 
-// Configurar automáticamente el botón volver cuando se carga la página
-document.addEventListener("DOMContentLoaded", () => {
+// Configurar automáticamente cuando se carga la página
+document.addEventListener("DOMContentLoaded", async () => {
     console.log("🚀 Common.js cargado - Configurando página...");
-    configurarBotonVolver();
+    
+    // Configurar botón volver
+    await configurarBotonVolver();
+    
+    // Verificar eventos cercanos (con pequeño delay para que cargue la página primero)
+    setTimeout(() => {
+        verificarEventosCercanos();
+    }, 1000);
 });

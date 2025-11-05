@@ -1,9 +1,47 @@
-// eventos.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const cuerpoTabla = document.getElementById('cuerpo_tabla_eventos');
     const botonVolver = document.getElementById('volver_menu');
+    const modal = document.getElementById('modalParticipar');
+    const modalTitulo = document.getElementById('modalTitulo');
+    const modalDescripcion = document.getElementById('modalDescripcion');
+    const btnConfirmarParticipar = document.getElementById('btnConfirmarParticipar');
+    const btnCancelarParticipar = document.getElementById('btnCancelarParticipar');
     
+    let usuarioActual = null;
+    let eventoSeleccionado = null;
+
+    // Obtener usuario actual desde localStorage
+    async function obtenerUsuarioActual() {
+        try {
+            const usuarioGuardado = localStorage.getItem('user');
+            
+            if (!usuarioGuardado) {
+                console.log('No hay usuario en localStorage');
+                return null;
+            }
+
+            const usuario = JSON.parse(usuarioGuardado);
+            
+            if (!usuario.id_usuario) {
+                console.error('Usuario no tiene id_usuario:', usuario);
+                return null;
+            }
+
+            usuarioActual = {
+                id_usuario: usuario.id_usuario,
+                nombre_usuario: usuario.nombre_usuario,
+                nombre_apellido: usuario.nombre_apellido
+            };
+
+            console.log('Usuario actual establecido:', usuarioActual);
+            return usuarioActual;
+
+        } catch (error) {
+            console.error('Error al obtener usuario desde localStorage:', error);
+            return null;
+        }
+    }
+
     async function cargarEventos() {
         try {
             console.log('Cargando eventos desde la tabla "evento"...');
@@ -15,9 +53,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Consulta a la tabla "evento"
             const { data: eventos, error } = await supabase
-                .from('evento')  // Tabla correcta: evento
+                .from('evento')
                 .select('*')
-                .order('fecha_evento', { ascending: true }); // Ordenar por fecha
+                .order('fecha_evento', { ascending: true });
 
             if (error) {
                 console.error('Error al cargar eventos:', error);
@@ -26,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             console.log('Eventos cargados correctamente:', eventos);
-            mostrarEventos(eventos);
+            await mostrarEventos(eventos);
 
         } catch (error) {
             console.error('Error inesperado:', error);
@@ -46,49 +84,162 @@ document.addEventListener('DOMContentLoaded', function() {
         
         eventos.forEach(evento => {
             const fila = document.createElement('tr');
+            fila.style.cursor = 'pointer';
+            fila.dataset.idEvento = evento.id_evento;
             
             // Celda Evento (nombre del evento)
             const celdaEvento = document.createElement('td');
-            celdaEvento.textContent = evento.nombre_evento || evento.titulo || evento.nombre || 'Sin nombre';
+            celdaEvento.textContent = evento.nombre_evento || 'Sin nombre';
             
             // Celda Fecha del Evento
             const celdaFecha = document.createElement('td');
-            // Formatear la fecha si es necesario
-            const fecha = evento.fecha_evento || evento.fecha;
+            const fecha = evento.fecha_evento;
             celdaFecha.textContent = formatearFecha(fecha) || 'Sin fecha';
             
             // Celda Lugar
             const celdaLugar = document.createElement('td');
-            celdaLugar.textContent = evento.lugar || evento.ubicacion || 'Sin lugar';
+            celdaLugar.textContent = evento.lugar || 'Sin lugar';
             
             // Celda Descripción
             const celdaDescripcion = document.createElement('td');
-            celdaDescripcion.textContent = evento.descripcion || evento.descripcion_evento || 'Sin descripción';
+            celdaDescripcion.textContent = evento.descripcion_evento || 'Sin descripción';
             
             fila.appendChild(celdaEvento);
             fila.appendChild(celdaFecha);
             fila.appendChild(celdaLugar);
             fila.appendChild(celdaDescripcion);
+            
+            // Hacer la fila clickeable para participar
+            fila.addEventListener('click', () => mostrarModalParticipar(evento));
+            
             cuerpoTabla.appendChild(fila);
         });
     }
 
-    // Función para formatear fechas
+    function mostrarModalParticipar(evento) {
+        if (!usuarioActual) {
+            alert('Debes iniciar sesión para participar en eventos');
+            return;
+        }
+
+        // Verificar si ya participa en el evento
+        verificarParticipacion(evento).then(yaParticipa => {
+            if (yaParticipa) {
+                alert(`Ya estás participando en el evento "${evento.nombre_evento}"`);
+                return;
+            }
+
+            eventoSeleccionado = evento;
+            modalTitulo.textContent = `¿Participar en "${evento.nombre_evento}"?`;
+            modalDescripcion.textContent = `¿Confirmas que deseas participar en el evento "${evento.nombre_evento}" que se realizará el ${formatearFecha(evento.fecha_evento)} en ${evento.lugar}?`;
+            modal.style.display = 'flex';
+        });
+    }
+
+    // Verificar si el usuario ya participa en el evento
+    async function verificarParticipacion(evento) {
+        if (!usuarioActual) return false;
+        
+        try {
+            const { data, error } = await supabase
+                .from('evento_usuario')
+                .select('id_evento_usuario')
+                .eq('id_usuario', usuarioActual.id_usuario)
+                .eq('id_evento', evento.id_evento)
+                .single();
+
+            if (error && error.code !== 'PGRST116') { // PGRST116 es "no encontrado"
+                console.error('Error al verificar participación:', error);
+                return false;
+            }
+
+            return !!data; // Retorna true si encontró participación, false si no
+        } catch (error) {
+            console.error('Error inesperado al verificar participación:', error);
+            return false;
+        }
+    }
+
+    async function participarEnEvento() {
+        if (!usuarioActual || !eventoSeleccionado) {
+            console.error('No hay usuario o evento seleccionado');
+            return;
+        }
+
+        try {
+            btnConfirmarParticipar.disabled = true;
+            btnConfirmarParticipar.textContent = 'Participando...';
+
+            console.log('Participando en evento:', {
+                id_usuario: usuarioActual.id_usuario,
+                id_evento: eventoSeleccionado.id_evento
+            });
+
+            // Insertar en la tabla evento_usuario
+            const { data, error } = await supabase
+                .from('evento_usuario')
+                .insert([
+                    {
+                        id_usuario: usuarioActual.id_usuario,
+                        id_evento: eventoSeleccionado.id_evento
+                    }
+                ])
+                .select();
+
+            if (error) {
+                console.error('Error al participar en evento:', error);
+                alert('Error al participar en el evento: ' + error.message);
+                return;
+            }
+
+            console.log('Participación registrada exitosamente:', data);
+            alert('¡Te has registrado exitosamente en el evento!');
+            
+            // Cerrar modal
+            cerrarModal();
+
+        } catch (error) {
+            console.error('Error inesperado al participar en evento:', error);
+            alert('Error de conexión al participar en el evento');
+        } finally {
+            btnConfirmarParticipar.disabled = false;
+            btnConfirmarParticipar.textContent = 'Sí, participar';
+        }
+    }
+
+    function cerrarModal() {
+        modal.style.display = 'none';
+        eventoSeleccionado = null;
+    }
+
+    // Función para formatear fechas - VERSIÓN ROBUSTA
     function formatearFecha(fechaString) {
         if (!fechaString) return '';
         
         try {
-            const fecha = new Date(fechaString);
+            // Dividir la fecha en partes para evitar problemas de zona horaria
+            const [anio, mes, dia] = fechaString.split('-');
+            const fecha = new Date(anio, mes - 1, dia); // mes - 1 porque JavaScript cuenta meses desde 0
+            
             return fecha.toLocaleDateString('es-ES', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
             });
         } catch (error) {
-            return fechaString; // Devolver la fecha original si hay error
+            // Si falla el método anterior, intentar con Date normal
+            try {
+                const fecha = new Date(fechaString);
+                return fecha.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            } catch (e) {
+                return fechaString;
+            }
         }
     }
-
     function mostrarMensajeError(mensaje) {
         cuerpoTabla.innerHTML = '';
         const fila = document.createElement('tr');
@@ -96,10 +247,19 @@ document.addEventListener('DOMContentLoaded', function() {
         cuerpoTabla.appendChild(fila);
     }
 
-    botonVolver.addEventListener('click', function() {
-        window.location.href = 'menu_principal.html';
+    // Event Listeners
+    btnConfirmarParticipar.addEventListener('click', participarEnEvento);
+    btnCancelarParticipar.addEventListener('click', cerrarModal);
+
+    // Cerrar modal al hacer clic fuera del contenido
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            cerrarModal();
+        }
     });
 
-    // Cargar los eventos reales de la base de datos
-    cargarEventos();
+    // Inicializar
+    obtenerUsuarioActual().then(() => {
+        cargarEventos();
+    });
 });

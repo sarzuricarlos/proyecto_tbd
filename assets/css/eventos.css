@@ -60,11 +60,6 @@ header {
     font-weight: bold;
 }
 
-#tabla_eventos tbody tr {
-    background-color: #1e293b;
-    transition: background-color 0.3s ease;
-}
-
 #tabla_eventos tbody tr:nth-child(odd) {
     background-color: #273449;
 }
@@ -74,8 +69,82 @@ header {
     border-bottom: 1px solid #334155;
 }
 
+/* Estilos para el modal */
+#modalParticipar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+#modalParticipar > div {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#modalTitulo {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+#modalDescripcion {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Botones del modal */
+#btnConfirmarParticipar {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnConfirmarParticipar:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+#btnConfirmarParticipar:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+#btnCancelarParticipar {
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnCancelarParticipar:hover {
+    background: #545b62;
+}
+
+/* Hacer las filas de la tabla clickeables */
+#tabla_eventos tbody tr {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
 #tabla_eventos tbody tr:hover {
     background-color: #334155;
+    transform: translateY(-2px);
 }
 
 #cuerpo_tabla_eventos {
