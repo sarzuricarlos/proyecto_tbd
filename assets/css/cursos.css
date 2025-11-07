@@ -85,6 +85,81 @@ h3 {
     font-weight: 500;
 }
 
+/* 🔍 ESTILOS PARA EL BUSCADOR */
+.contenedor-buscador {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#buscador_cursos {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#buscador_cursos::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#buscador_cursos:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Sugerencias del buscador */
+.sugerencias {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-radius: 0 0 12px 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+
+.sugerencia-item {
+    padding: 12px 20px;
+    color: #333;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background 0.2s ease;
+}
+
+.sugerencia-item:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.sugerencia-item:last-child {
+    border-bottom: none;
+}
+
+.sugerencia-item strong {
+    color: #007bff;
+}
+
+/* Mensaje cuando no hay resultados */
+.mensaje-no-resultados {
+    padding: 15px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
 .tabla_cursos {
     width: 100%;
     border-collapse: collapse;
@@ -92,18 +167,52 @@ h3 {
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
+    /* Eliminamos las propiedades de scroll de la tabla principal */
+}
+
+/* Contenedor para el cuerpo de la tabla con scroll */
+.tabla-contenedor-cuerpo {
+    max-height: 40vh; /* Un poco menos del 50% para dar espacio al header */
+    overflow-y: auto;
+    display: block;
+}
+
+/* Header fijo */
+.tabla_cursos thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Cuerpo con scroll */
+.tabla_cursos tbody {
+    display: block;
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.tabla_cursos tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tabla_cursos th,
+.tabla_cursos td {
+    color: #f1f5f9;
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tabla_cursos th {
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     padding: 10px;
-}
-
-.tabla_cursos td {
-    color: #f1f5f9;
-    padding: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10; /* Asegura que el header quede por encima */
 }
 
 .tabla_cursos tr:nth-child(even) {
@@ -113,6 +222,8 @@ h3 {
 .tabla_cursos tr:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
+
+
 
 .contenedor-boton {
     display: flex;
@@ -141,63 +252,17 @@ h3 {
     transform: scale(0.98);
 }
 
-#seccion_cursos {
+/* Ajustar las secciones para mejor visualización */
+#seccion_cursos, #seccion_horario {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* centra verticalmente */
+    justify-content: flex-start;
     width: 100%;
-    min-height: 80vh; /* evita que quede demasiado pequeño */
-}
-#iconos_redes_sociales {
-    margin-top: 3em;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; /* 3 columnas */
-    align-items: center;
-    padding: 10px 20px;
-    background: transparent; /* o el color que quieras */
-    position: relative;
-    width: 100%;
-}
-
-/* Centramos las redes sociales */
-#iconos_redes_sociales nav {
-    grid-column: 2; /* Columna central */
-    display: flex;
-    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
     gap: 20px;
 }
-
-/* Íconos */
-#iconos_redes_sociales nav img {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-#iconos_redes_sociales img:hover {
-    transform: scale(1.2);
-}
-
-#iconos_redes_sociales button {
-    grid-column: 1; /* Columna izquierda */
-    justify-self: start; /* Alineado al borde izquierdo */
-    color: #fff; /* o el color que combine con tu fondo */
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-#iconos_redes_sociales h3 {
-    grid-column: 3; /* Columna derecha */
-    justify-self: end; /* Alineado al borde derecho */
-    color: #fff; /* o el color que combine con tu fondo */
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0;
-}
-
 #botones_ranking {
     display: flex;
     justify-content: center;

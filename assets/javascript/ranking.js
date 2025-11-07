@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
         const tablaCuerpo = document.getElementById("cuerpo_tabla_ranking");
-        const btnMenu = document.getElementById("volver_menu");
 
         if (!supabase) {
             console.error("Supabase no está inicializado.");
             return;
         }
+
+        // ✅ CONFIGURAR BOTÓN VOLVER AUTOMÁTICAMENTE CON COMMON.JS
+        await configurarBotonVolver();
+
         const { data, error } = await supabase.rpc('sp_obtener_ranking_estudiantes');
 
         if (error) throw error;
@@ -15,7 +18,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (data.length === 0) {
             console.log("🟢 Datos recibidos del ranking:", data);
-console.log("🟠 Error (si hay):", error);
+            console.log("🟠 Error (si hay):", error);
+            
             const fila = document.createElement("tr");
             fila.innerHTML = `<td colspan="3">No hay evaluaciones en el ranking.</td>`;
             tablaCuerpo.appendChild(fila);
@@ -43,10 +47,6 @@ console.log("🟠 Error (si hay):", error);
                 tablaCuerpo.appendChild(fila);
             });
         }
-
-        btnMenu.addEventListener("click", () => {
-            window.location.href = "./menuprincipal.html";
-        });
 
     } catch (err) {
         console.error("Error en el ranking:", err.message);

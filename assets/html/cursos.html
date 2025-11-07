@@ -28,14 +28,19 @@
     </article>
 
     <section id="seccion_cursos" style="display: none;">
-    <table class="tabla_cursos" id="tabla_cursos_disponibles"></table>
+        <!-- 🔍 BUSCADOR -->
+        <div class="contenedor-buscador">
+            <input type="text" id="buscador_cursos" placeholder="🔍 Buscar cursos por título, descripción, modalidad, horario...">
+            <div id="sugerencias_buscador" class="sugerencias"></div>
+        </div>
+        <table class="tabla_cursos" id="tabla_cursos_disponibles"></table>
     </section>
 
     <section id="seccion_horario" style="display: none;">
         <table class="tabla_cursos" id="tabla_horario_usuario"></table>
     </section>
 
-    <div class="contenedor-boton" ">
+    <div class="contenedor-boton">
         <button class="boton_menu" id="btn_volver_disponibles" style="display: none;">Volver</button>
     </div>
 
