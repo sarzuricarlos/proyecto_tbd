@@ -116,42 +116,6 @@ h3 {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Sugerencias del buscador */
-.sugerencias {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(15px);
-    border-radius: 0 0 12px 12px;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 1000;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    display: none;
-}
-
-.sugerencia-item {
-    padding: 12px 20px;
-    color: #333;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    transition: background 0.2s ease;
-}
-
-.sugerencia-item:hover {
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.sugerencia-item:last-child {
-    border-bottom: none;
-}
-
-.sugerencia-item strong {
-    color: #007bff;
-}
-
 /* Mensaje cuando no hay resultados */
 .mensaje-no-resultados {
     padding: 15px;
