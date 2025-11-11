@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const seccionHorario = document.getElementById("seccion_horario");
     const tablaCursos = document.getElementById("tabla_cursos_disponibles");
     const tablaHorario = document.getElementById("tabla_horario_usuario");
-
+    const buscador = document.getElementById("buscador_cursos");
     const btnVolverCursos = document.getElementById('btn_volver_disponibles');
 
     // Verificar que los elementos existen
@@ -260,5 +260,39 @@ document.addEventListener("DOMContentLoaded", async () => {
         btnVolverCursos.style.display = "none";
     });
     }
+
+    if (buscador) {
+        buscador.addEventListener("input", () => {
+            const filtro = buscador.value.toLowerCase().trim();
+            const filas = tablaCursos.querySelectorAll("tbody tr");
+
+            if (filas.length === 0) return;
+
+            let resultados = 0;
+            filas.forEach(fila => {
+                const textoFila = fila.innerText.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = "";
+                    resultados++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            // Si no hay coincidencias
+            const noResultados = document.getElementById("fila_sin_resultados");
+            if (resultados === 0) {
+                if (!noResultados) {
+                    const tr = document.createElement("tr");
+                    tr.id = "fila_sin_resultados";
+                    tr.innerHTML = `<td colspan="8" style="color:white; text-align:center;">No se encontraron cursos con ese criterio.</td>`;
+                    tablaCursos.querySelector("tbody").appendChild(tr);
+                }
+            } else if (noResultados) {
+                noResultados.remove();
+            }
+        });
+    }
+
     console.log("✅ Cursos.js cargado correctamente");
 });
