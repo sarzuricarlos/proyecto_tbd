@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputComentario = document.getElementById('nuevo_comentario');
     const btnComentar = document.getElementById('btn_comentar');
     const contadorCaracteres = document.getElementById('contador_caracteres');
+    const buscadorForos = document.getElementById("buscador_foros");
 
     let foroSeleccionado = null;
     let usuarioActual = null;
@@ -384,6 +385,39 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     btnComentar.addEventListener('click', agregarComentario);
+
+    if (buscadorForos) {
+        buscadorForos.addEventListener("input", () => {
+            const filtro = buscadorForos.value.toLowerCase().trim();
+            const filas = cuerpoTabla.querySelectorAll("tr");
+
+            if (filas.length === 0) return;
+
+            let resultados = 0;
+            filas.forEach(fila => {
+                const textoFila = fila.innerText.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = "";
+                    resultados++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            // Si no hay coincidencias
+            const noResultados = document.getElementById("fila_sin_resultados");
+            if (resultados === 0) {
+                if (!noResultados) {
+                    const tr = document.createElement("tr");
+                    tr.id = "fila_sin_resultados";
+                    tr.innerHTML = `<td colspan="2" style="color:white; text-align:center;">No se encontraron foros con ese criterio.</td>`;
+                    cuerpoTabla.appendChild(tr);
+                }
+            } else if (noResultados) {
+                noResultados.remove();
+            }
+        });
+    }
 
     // Inicializar foros
     console.log('Inicializando foros...');

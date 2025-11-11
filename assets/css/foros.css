@@ -453,6 +453,125 @@ h4, h5 {
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
+/* 🔍 ESTILOS PARA EL BUSCADOR (SIMILAR A CURSOS) */
+.contenedor-buscador {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#buscador_foros {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#buscador_foros::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#buscador_foros:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 📊 ESTILOS PARA TABLA DE FOROS (SIMILAR A CURSOS) */
+.tabla_foros {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Contenedor para el cuerpo de la tabla con scroll */
+.tabla-contenedor-cuerpo {
+    max-height: 40vh;
+    overflow-y: auto;
+    display: block;
+}
+
+/* Header fijo */
+.tabla_foros thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Cuerpo con scroll */
+.tabla_foros tbody {
+    display: block;
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.tabla_foros tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tabla_foros th,
+.tabla_foros td {
+    color: #f1f5f9;
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    word-wrap: break-word;
+}
+
+.tabla_foros th {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 15px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.tabla_foros tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tabla_foros tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* Mensaje cuando no hay resultados */
+.mensaje-no-resultados {
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Ajustar las secciones para mejor visualización */
+#lista_foros, #comentarios_foro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
 /* Responsive para el formulario */
 @media (max-width: 768px) {
     .input-group {

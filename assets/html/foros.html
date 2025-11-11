@@ -17,7 +17,14 @@
     
     <!-- Vista de lista de foros -->
     <article id="lista_foros" style="display: block;">
-        <table id="tabla_eventos">
+        <!-- 🔍 BUSCADOR AGREGADO -->
+        <div class="contenedor-buscador">
+            <input type="text" id="buscador_foros" placeholder="🔍 Buscar foros por título, descripción...">
+            <div id="sugerencias_buscador" class="sugerencias"></div>
+        </div>
+        
+        <!-- TABLA ACTUALIZADA CON ESTRUCTURA SIMILAR A CURSOS -->
+        <table class="tabla_foros" id="tabla_eventos">
             <thead>
                 <tr>
                     <th>Foro</th>
@@ -25,12 +32,12 @@
                 </tr>
             </thead>
             <tbody id="cuerpo_tabla_eventos">
-                
+                <!-- Los foros se cargarán aquí -->
             </tbody>
         </table>
     </article>
 
-    <!-- Vista de comentarios del foro -->
+    <!-- Vista de comentarios del foro (SIN CAMBIOS) -->
     <article id="comentarios_foro" style="display: none;">
         <div id="info_foro">
             <h4 id="titulo_foro_seleccionado"></h4>
