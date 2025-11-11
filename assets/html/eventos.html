@@ -14,8 +14,17 @@
 <body>
     <header>Bash Academy</header>
     <h3>Eventos</h3>
-    <article id="eventos">
-        <table id="tabla_eventos">
+    
+    <!-- Vista de lista de eventos - ESTRUCTURA IDÉNTICA A FOROS -->
+    <article id="eventos" style="display: block;">
+        <!-- 🔍 BUSCADOR DENTRO DEL ARTICLE COMO EN FOROS -->
+        <div class="contenedor-buscador">
+            <input type="text" id="buscador_eventos" placeholder="🔍 Buscar eventos por nombre, lugar, descripción...">
+            <div id="sugerencias_buscador" class="sugerencias"></div>
+        </div>
+        
+        <!-- TABLA CON CLASE tabla_eventos COMO EN FOROS -->
+        <table class="tabla_eventos" id="tabla_eventos">
             <thead>
                 <tr>
                     <th>Evento</th>
@@ -25,7 +34,7 @@
                 </tr>
             </thead>
             <tbody id="cuerpo_tabla_eventos">
-                
+                <!-- Los eventos se cargarán aquí -->
             </tbody>
         </table>
     </article>

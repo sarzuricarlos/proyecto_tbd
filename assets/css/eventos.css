@@ -5,11 +5,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-h3 {
-    color: #fff;
-    text-align: center;
-}
-
 body {
     background-image: url(../img/fondo_inicio.jpg);
     background-size: cover;
@@ -32,44 +27,128 @@ header {
     margin-bottom: 30px;
 }
 
-/* ======== CONTENEDOR PRINCIPAL ======== */
-#eventos {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-    padding: 2rem;
-    margin-top: 1.5rem;
-    width: 90%;
-    max-width: 700px;
-}
-
-/* ======== TABLA ======== */
-#tabla_eventos {
-    width: 100%;
-    border-collapse: collapse;
+h3 {
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
-#tabla_eventos thead {
-    background-color: #00000063;
+#eventos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    gap: 20px;
 }
 
-#tabla_eventos th {
-    padding: 12px;
-    color: #f8fafc;
-    font-weight: bold;
+/* 🔍 ESTILOS PARA EL BUSCADOR (IDÉNTICO A FOROS) */
+.contenedor-buscador {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    position: relative;
 }
 
-#tabla_eventos tbody tr:nth-child(odd) {
-    background-color: #273449;
+#buscador_eventos {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    color: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
 
-#tabla_eventos td {
-    padding: 10px;
-    border-bottom: 1px solid #334155;
+#buscador_eventos::placeholder {
+    color: rgba(255, 255, 255, 0.7);
 }
 
-/* Estilos para el modal */
+#buscador_eventos:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 📊 ESTILOS PARA TABLA DE EVENTOS (IDÉNTICO A FOROS) */
+.tabla_eventos {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+}
+
+/* Header fijo */
+.tabla_eventos thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Cuerpo con scroll */
+.tabla_eventos tbody {
+    display: block;
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.tabla_eventos tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tabla_eventos th,
+.tabla_eventos td {
+    color: #f1f5f9;
+    padding: 12px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    word-wrap: break-word;
+}
+
+.tabla_eventos th {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    padding: 15px 8px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.tabla_eventos tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.tabla_eventos tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* Mensaje cuando no hay resultados */
+.mensaje-no-resultados {
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ESTILOS DEL MODAL (MANTENER LOS EXISTENTES) */
 #modalParticipar {
     display: none;
     position: fixed;
@@ -136,26 +215,13 @@ header {
     background: #545b62;
 }
 
-/* Hacer las filas de la tabla clickeables */
-#tabla_eventos tbody tr {
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#tabla_eventos tbody tr:hover {
-    background-color: #334155;
-    transform: translateY(-2px);
-}
-
-#cuerpo_tabla_eventos {
-    color: #c8c8c8;
-}
-
-/* ======== BOTÓN ======== */
+/* BOTONES FOOTER (IDÉNTICO A FOROS) */
 #botones_eventos {
     display: flex;
     justify-content: center;
     margin-top: 1.5rem;
+    width: 90%;
+    max-width: 800px;
 }
 
 #volver_menu {
@@ -179,18 +245,48 @@ header {
     transform: scale(0.98);
 }
 
-/* ======== RESPONSIVE ======== */
-@media (max-width: 600px) {
-    #tabla_eventos th, #tabla_eventos td {
+/* RESPONSIVE (IDÉNTICO A FOROS) */
+@media (max-width: 768px) {
+    #eventos {
+        padding: 1.5rem;
+        width: 95%;
+    }
+
+    .tabla_eventos th, .tabla_eventos td {
         padding: 8px;
         font-size: 0.9rem;
     }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
 
     h3 {
-        font-size: 1.3rem;
+        font-size: 1rem;
+        margin-bottom: 20px;
     }
 
     #eventos {
-        padding: 1.2rem;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .tabla_eventos th, .tabla_eventos td {
+        padding: 6px;
+        font-size: 0.8rem;
+        min-width: 120px;
+    }
+
+    #volver_menu {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        min-width: 100px;
     }
 }

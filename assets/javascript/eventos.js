@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalDescripcion = document.getElementById('modalDescripcion');
     const btnConfirmarParticipar = document.getElementById('btnConfirmarParticipar');
     const btnCancelarParticipar = document.getElementById('btnCancelarParticipar');
+    const buscadorEventos = document.getElementById("buscador_eventos");
     
     let usuarioActual = null;
     let eventoSeleccionado = null;
@@ -277,4 +278,38 @@ document.addEventListener('DOMContentLoaded', function() {
     obtenerUsuarioActual().then(() => {
         cargarEventos();
     });
+
+    
+    if (buscadorEventos) {
+        buscadorEventos.addEventListener("input", () => {
+            const filtro = buscadorEventos.value.toLowerCase().trim();
+            const filas = cuerpoTabla.querySelectorAll("tr");
+
+            if (filas.length === 0) return;
+
+            let resultados = 0;
+            filas.forEach(fila => {
+                const textoFila = fila.innerText.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = "";
+                    resultados++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            // Si no hay coincidencias
+            const noResultados = document.getElementById("fila_sin_resultados");
+            if (resultados === 0) {
+                if (!noResultados) {
+                    const tr = document.createElement("tr");
+                    tr.id = "fila_sin_resultados";
+                    tr.innerHTML = `<td colspan="4" style="color:white; text-align:center;">No se encontraron eventos con ese criterio.</td>`;
+                    cuerpoTabla.appendChild(tr);
+                }
+            } else if (noResultados) {
+                noResultados.remove();
+            }
+        });
+    }
 });
