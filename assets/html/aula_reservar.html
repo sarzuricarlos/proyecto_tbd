@@ -29,6 +29,12 @@
 
     <!-- 🔹 Contenedor de aulas disponibles -->
     <section id="seccion_aulas_disponibles" style="display: none;">
+        <!-- 🔍 BUSCADOR AGREGADO -->
+        <div class="contenedor-buscador">
+            <input type="text" id="buscador_disponibles" placeholder="🔍 Buscar aulas por nombre, ubicación, capacidad...">
+            <div id="sugerencias_buscador" class="sugerencias"></div>
+        </div>
+        
         <table class="tabla_aulas" id="tabla_aulas_disponibles"></table>
         <div id="volver_disponibles" class="contenedor_volver">
             <button id="btn_volver_disponibles" class="btn-volver">Volver</button>
@@ -37,6 +43,12 @@
 
     <!-- 🔹 Contenedor de aulas reservadas -->
     <section id="seccion_aulas_reservadas" style="display: none;">
+        <!-- 🔍 BUSCADOR AGREGADO -->
+        <div class="contenedor-buscador">
+            <input type="text" id="buscador_reservadas" placeholder="🔍 Buscar aulas reservadas...">
+            <div id="sugerencias_buscador" class="sugerencias"></div>
+        </div>
+        
         <table class="tabla_aulas" id="tabla_aulas_reservadas"></table>
         <div id="volver_reservadas" class="contenedor_volver">
             <button id="btn_volver_reservadas" class="btn-volver">Volver</button>

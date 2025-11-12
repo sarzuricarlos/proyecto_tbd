@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     const btnReservadas = document.getElementById("boton_reservadas");
     const btnVolverDisponibles = document.getElementById("btn_volver_disponibles");
     const btnVolverReservadas = document.getElementById("btn_volver_reservadas");
+    const buscadorDisponibles = document.getElementById("buscador_disponibles");
+    const buscadorReservadas = document.getElementById("buscador_reservadas");
+
     // 🔹 Mostrar aulas disponibles
     btnDisponibles.addEventListener("click", () => {
         menuAulas.style.display = "none";
@@ -208,7 +211,7 @@ async function cargarAulasReservadas() {
             data.forEach(curso => {
                 const option = document.createElement("option");
                 option.value = curso.id_curso;
-                option.textContent = `${curso.titulo_curso} (${curso.cupos_disponibles} cupos)`;
+                option.textContent = `${curso.titulo_curso}`;
                 selectCurso.appendChild(option);
             });
             
@@ -262,5 +265,73 @@ async function cargarAulasReservadas() {
             console.error("Error realizando reserva:", err);
             alert('❌ Error al realizar la reserva');
         }
+    }
+    
+    if (buscadorDisponibles) {
+        buscadorDisponibles.addEventListener("input", () => {
+            const filtro = buscadorDisponibles.value.toLowerCase().trim();
+            const tablaDisponibles = document.getElementById("tabla_aulas_disponibles");
+            const filas = tablaDisponibles.querySelectorAll("tbody tr");
+
+            if (filas.length === 0) return;
+
+            let resultados = 0;
+            filas.forEach(fila => {
+                const textoFila = fila.innerText.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = "";
+                    resultados++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            // Si no hay coincidencias
+            const noResultados = document.getElementById("fila_sin_resultados_disponibles");
+            if (resultados === 0) {
+                if (!noResultados) {
+                    const tr = document.createElement("tr");
+                    tr.id = "fila_sin_resultados_disponibles";
+                    tr.innerHTML = `<td colspan="6" style="color:white; text-align:center;">No se encontraron aulas disponibles con ese criterio.</td>`;
+                    tablaDisponibles.querySelector("tbody").appendChild(tr);
+                }
+            } else if (noResultados) {
+                noResultados.remove();
+            }
+        });
+    }
+
+    if (buscadorReservadas) {
+        buscadorReservadas.addEventListener("input", () => {
+            const filtro = buscadorReservadas.value.toLowerCase().trim();
+            const tablaReservadas = document.getElementById("tabla_aulas_reservadas");
+            const filas = tablaReservadas.querySelectorAll("tbody tr");
+
+            if (filas.length === 0) return;
+
+            let resultados = 0;
+            filas.forEach(fila => {
+                const textoFila = fila.innerText.toLowerCase();
+                if (textoFila.includes(filtro)) {
+                    fila.style.display = "";
+                    resultados++;
+                } else {
+                    fila.style.display = "none";
+                }
+            });
+
+            // Si no hay coincidencias
+            const noResultados = document.getElementById("fila_sin_resultados_reservadas");
+            if (resultados === 0) {
+                if (!noResultados) {
+                    const tr = document.createElement("tr");
+                    tr.id = "fila_sin_resultados_reservadas";
+                    tr.innerHTML = `<td colspan="6" style="color:white; text-align:center;">No se encontraron aulas reservadas con ese criterio.</td>`;
+                    tablaReservadas.querySelector("tbody").appendChild(tr);
+                }
+            } else if (noResultados) {
+                noResultados.remove();
+            }
+        });
     }
 });
