@@ -1,3 +1,6 @@
+/* notas.css - combinado y actualizado */
+
+/* Reset y fuente */
 * {
     margin: 0;
     padding: 0;
@@ -5,8 +8,9 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Fondo y layout general */
 body {
-    background-image: url(../img/fondo_inicio.jpg);
+    background-image: url(../img/fondo_inicio.jpg); /* si quieres usar otro fondo cámbialo aquí */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -34,9 +38,254 @@ h3 {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 30px;
+    text-align: center;
 }
 
-/* 🔹 Menú principal de notas */
+/* -------------------------
+   Reutilizables: formulario,
+   inputs, botones, toggle
+   ------------------------- */
+.formulario {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    color: #fff;
+}
+
+.caja_usuario, .caja_contra, .caja_foto_perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+span {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+input, select, textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #000;
+    transition: background-color 0.2s ease, transform 0.08s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+    background-color: #fff;
+    transform: translateY(-1px);
+}
+
+/* botones generales */
+button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+button:hover:not(.toggle-password) {
+    background-color: #222;
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Input con ícono (ej. toggle eye) */
+.input_con_icono {
+    position: relative;
+    width: 100%;
+}
+
+.input_con_icono input {
+    width: 100%;
+    padding-right: 48px; /* espacio para ícono */
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    transform-origin: center;
+}
+
+.toggle-password:hover img {
+    opacity: 1;
+    transform: scale(1.08);
+}
+
+/* Animaciones utilitarias */
+.fade-slide-in { animation: fadeSlideIn 0.45s forwards; }
+.fade-slide-out { animation: fadeSlideOut 0.45s forwards; }
+
+@keyframes fadeSlideIn {
+    0% { opacity: 0; transform: translateY(-12px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeSlideOut {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* -------------------------
+   Estilos específicos de Notas
+   ------------------------- */
+
+/* Menú principal de notas (botones grandes) */
+#menu_notas {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 22px;
+    justify-items: center;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+/* Reusar .boton_menu definido arriba (tamaño y estilo consistente) */
+.boton_menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    padding: 22px;
+    width: 100%;
+    max-width: 210px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.boton_menu img { width: 72px; height: 72px; margin-bottom: 10px; }
+.boton_menu span { font-size: 1rem; color: #fff; font-weight: 600; }
+
+/* Tabla de notas */
+.tabla_notas {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.tabla_notas thead th {
+    background-color: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 12px 10px;
+    font-weight: 700;
+}
+
+.tabla_notas td {
+    color: #f1f5f9;
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    vertical-align: middle;
+}
+
+.tabla_notas tr:nth-child(even) { background-color: rgba(0,0,0,0.18); }
+.tabla_notas tr:hover { background-color: rgba(255,255,255,0.04); }
+
+/* Contenedor y botón volver */
+.contenedor_volver {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+    width: 100%;
+}
+
+.btn-volver {
+    background-color: hsla(0, 0%, 100%, 0.12);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.12s ease;
+}
+
+.btn-volver:hover { background-color: rgba(105,105,105,0.28); transform: translateY(-3px); }
+.btn-volver:active { transform: translateY(0); }
+
+/* Footer volver */
+#botones_notas { display: flex; justify-content: center; margin-top: 16px; }
+#volver_menu {
+    background-color: hsla(0,0%,100%,0.12);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+/* Mensajes */
+#mensaje_inicio, #mensaje_registro {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* 🎨 Fondo general */
+body {
+    background-image: url(../img/fondo_inicio.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 🧭 Menú principal */
 #menu_notas {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 15px;
@@ -73,84 +322,53 @@ h3 {
     background: rgba(0, 0, 0, 0.504);
 }
 
-.boton_menu img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
+/* 🗂️ Panel para subir notas */
+#contenedor_subir {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    margin-top: 20px;
+    animation: fadeIn 0.5s ease;
 }
 
-.boton_menu span {
-    font-size: 1rem;
-    color: #ffffff;
-    font-weight: 500;
-}
-
-/* 🔹 Tablas para notas */
-.tabla_notas {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    text-align: center;
-}
-
-.tabla_notas th {
-    background-color: rgba(0, 0, 0, 0.5);
+#contenedor_subir h3 {
     color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.fila_selector {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.fila_selector label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.fila_selector select,
+.fila_selector input {
     padding: 10px;
-}
-
-.tabla_notas td {
-    color: #f1f5f9;
-    padding: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.tabla_notas tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.tabla_notas tr:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* 🔹 Botón de volver y pie de página */
-#botones_notas {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-#volver_menu {
-    background-color: hsla(0, 0%, 100%, 0.2);
-    color: #ffffff;
-    border: none;
     border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    color: #000;
 }
 
-#volver_menu:hover {
-    background-color: rgba(105, 105, 105, 0.304);
-    transform: scale(1.05);
-}
-
-#volver_menu:active {
-    transform: scale(0.98);
-}
-
-/* 🔹 Contenedor centrado del botón "Volver" */
-.contenedor_volver {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-/* 🔹 Botón "Volver" (mismo estilo que #volver_menu del footer) */
+/* 🧮 Botón de volver */
 .btn-volver {
     background-color: hsla(0, 0%, 100%, 0.2);
     color: #ffffff;
@@ -161,6 +379,7 @@ h3 {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
 }
 
 .btn-volver:hover {
@@ -172,9 +391,30 @@ h3 {
     transform: scale(0.98);
 }
 
-/* 🔹 Responsive */
+/* ✨ Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 📱 Responsive */
 @media (max-width: 600px) {
     #menu_notas {
         grid-template-columns: 1fr;
     }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .formulario { width: 90%; padding: 22px; }
+    .boton_menu img { width: 64px; height: 64px; }
+    .tabla_notas { font-size: 14px; }
+}
+
+@media (max-width: 600px) {
+    header { font-size: 2em; margin-bottom: 18px; }
+    .formulario { width: 96%; padding: 18px; }
+    .boton_menu { padding: 16px; }
+    .boton_menu img { width: 56px; height: 56px; }
+    .tabla_notas thead th, .tabla_notas td { padding: 8px 6px; }
 }
