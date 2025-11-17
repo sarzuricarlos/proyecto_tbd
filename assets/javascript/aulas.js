@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-// 🔹 Cargar TODAS las aulas reservadas (solo datos de reserva_aula)
+// 🔹 Cargar TODAS las aulas reservadas (con nombres en lugar de IDs)
 async function cargarAulasReservadas() {
     try {
         await supabase.rpc('sp_actualizar_reservas_vencidas');
@@ -112,8 +112,8 @@ async function cargarAulasReservadas() {
             <thead>
                 <tr>
                     <th>ID Reserva</th>
-                    <th>ID Aula</th>
-                    <th>ID Curso</th>
+                    <th>Aula</th>
+                    <th>Curso</th>
                     <th>Fecha</th>
                     <th>Hora Inicio</th>
                     <th>Hora Fin</th>
@@ -126,8 +126,8 @@ async function cargarAulasReservadas() {
                     data.map(reserva => `
                         <tr>
                             <td>${reserva.id_reserva}</td>
-                            <td>${reserva.id_aula}</td>
-                            <td>${reserva.id_curso}</td>
+                            <td>${reserva.nombre_aula}</td>
+                            <td>${reserva.nombre_curso}</td>
                             <td>${reserva.fecha_reserva}</td>
                             <td>${reserva.hora_inicio}</td>
                             <td>${reserva.hora_fin}</td>    
