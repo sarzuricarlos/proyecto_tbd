@@ -27,53 +27,67 @@
         </button>
     </article>
 
-    <!-- 🔹 Contenedor para subir notas -->
-    <section id="seccion_subir_notas" style="display: none;">
+   <!-- 🔹 Contenedor para subir notas -->
+<section id="seccion_subir_notas" style="display: none;">
     <div class="panel-subir-notas">
         <h4>Subir notas</h4>
 
         <!-- Selector principal -->
         <label for="tipo_nota">Tipo de nota:</label>
         <select id="tipo_nota">
-        <option value="" selected disabled>Seleccione...</option>
-        <option value="tarea">Tarea</option>
-        <option value="evaluacion">Evaluación</option>
+            <option value="" selected disabled>Seleccione...</option>
+            <option value="tarea">Tarea</option>
+            <option value="evaluacion">Evaluación</option>
         </select>
 
         <!-- 🔸 Opciones para TAREA -->
         <div id="opciones_tarea" style="display: none;">
-        <label for="tema_tarea">Tema:</label>
-        <select id="tema_tarea">
-            <option value="" selected disabled>Seleccione un tema...</option>
-        </select>
+    <label for="curso_tarea">Curso:</label>
+    <select id="curso_tarea">
+        <option value="" selected disabled>Seleccione un curso...</option>
+    </select>
 
-        <label for="tarea_tema">Tarea:</label>
-        <select id="tarea_tema">
-            <option value="" selected disabled>Seleccione una tarea...</option>
-        </select>
+    <label for="modulo_tarea">Módulo:</label>
+    <select id="modulo_tarea">
+        <option value="" selected disabled>Seleccione un módulo...</option>
+    </select>
 
-        <button id="btn_marcar_completada">Marcar como completada ✅</button>
-        </div>
+    <label for="tema_tarea">Tema:</label>
+    <select id="tema_tarea">
+        <option value="" selected disabled>Seleccione un tema...</option>
+    </select>
 
+    <label for="tarea_tema">Tarea:</label>
+    <select id="tarea_tema">
+        <option value="" selected disabled>Seleccione una tarea...</option>
+    </select>
+
+    <button id="btn_marcar_completada">Marcar como completada ✅</button>
+</div>
         <!-- 🔸 Opciones para EVALUACIÓN -->
         <div id="opciones_evaluacion" style="display: none;">
-        <!-- AGREGAR ESTE CAMPO FALTANTE -->
-        <label for="modulo_evaluacion">Módulo:</label>
-        <select id="modulo_evaluacion">
-            <option value="" selected disabled>Seleccione un módulo...</option>
-        </select>
+            <!-- NUEVO: Selector de estudiante -->
+            <label for="estudiante_evaluacion">Estudiante:</label>
+            <select id="estudiante_evaluacion">
+                <option value="" selected disabled>Seleccione un estudiante...</option>
+            </select>
 
-        <label for="nota_evaluacion">Nota:</label>
-        <input type="number" id="nota_evaluacion" min="0" max="100" placeholder="Ingrese nota">
+            <label for="modulo_evaluacion">Módulo:</label>
+            <select id="modulo_evaluacion">
+                <option value="" selected disabled>Seleccione un módulo...</option>
+            </select>
 
-        <button id="btn_subir_nota">Subir nota 📝</button>
+            <label for="nota_evaluacion">Nota:</label>
+            <input type="number" id="nota_evaluacion" min="0" max="100" placeholder="Ingrese nota">
+
+            <button id="btn_subir_nota">Subir nota 📝</button>
         </div>
 
         <div id="volver_subir_notas" class="contenedor_volver">
-        <button id="btn_volver_subir_notas" class="btn-volver">Volver</button>
+            <button id="btn_volver_subir_notas" class="btn-volver">Volver</button>
         </div>
     </div>
-    </section>
+</section>
 
     <!-- 🔹 Contenedor de notas subidas -->
     <section id="seccion_cambiar_notas" style="display: none;">

@@ -10,7 +10,7 @@
 
 /* Fondo y layout general */
 body {
-    background-image: url(../img/fondo_inicio.jpg); /* si quieres usar otro fondo cámbialo aquí */
+    background-image: url(../img/fondo_inicio.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -367,6 +367,8 @@ body {
     font-size: 15px;
     color: #000;
 }
+
+
 
 /* 🧮 Botón de volver */
 .btn-volver {

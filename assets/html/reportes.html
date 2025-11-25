@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
+    <link rel="stylesheet" href="../css/configur_admin.css">
+    <title>Reportes</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <script src="../javascript/conexion_supabase.js"></script>
+    <script src="../javascript/common.js"></script>
+    <script src="../javascript/reporte.js"></script>
+</head>
+<body>
+    <header>Bash Academy</header>
+
+    <article id="panel_admin" class="panel_admin">
+        <h3>Panel de Configuración de Reportes</h3>
+        <nav class="menu_admin">
+            <button type="button" id="curso_report">📘 Reporte de Cursos</button>
+            <button type="button" id="foro_report">💬 Reporte de Foros</button>
+            <button type="button" id="evento_report">🎉 Reporte de Eventos</button>
+            <button type="button" id="pago_report">💰 Reporte de Pagos</button>
+            <button type="button" id="progreso_report">🏫 Reporte de Progreso Academico</button>
+            <button type="button" id="recompensa_report">🎁 Reporte de Recompensas</button>
+        </nav>
+    </article>
+
+    <!-- Loading indicator -->
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Generando reporte...</p>
+    </div>
+
+    <footer id="botones_eventos">
+        <button type="button" id="volver_menu">Menú principal</button>
+    </footer>
+
+    <script>
+        // Inicializar Pyodide
+        let pyodide;
+        async function initPyodide() {
+            console.log("Cargando Pyodide...");
+            pyodide = await loadPyodide();
+            
+            // Instalar micropip para instalar paquetes Python
+            await pyodide.loadPackage("micropip");
+            const micropip = pyodide.pyimport("micropip");
+            
+            // Instalar reportlab (para PDFs)
+            console.log("Instalando reportlab...");
+            await micropip.install("reportlab");
+            
+            console.log("Pyodide listo!");
+            window.pyodideReady = true;
+        }
+        
+        initPyodide();
+    </script>
+</body>
+</html>
