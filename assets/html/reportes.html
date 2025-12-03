@@ -5,9 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
     <link rel="stylesheet" href="../css/configur_admin.css">
+    <link rel="stylesheet" href="../css/reportes.css">
     <title>Reportes</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Pyodide (para PDFs futuros) -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <!-- Nuestros scripts -->
     <script src="../javascript/conexion_supabase.js"></script>
     <script src="../javascript/common.js"></script>
     <script src="../javascript/reporte.js"></script>
@@ -27,8 +33,24 @@
         </nav>
     </article>
 
+    <button id="btn_volver" class="btn-volver">← Volver a Reportes</button>
+
+    <div id="reportContent" class="report-container">
+        <h2 id="reportTitle"></h2>
+        <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="stats-container" id="statsContainer"></div>
+        
+        <!-- Botón para exportar -->
+        <div class="export-buttons">
+            <button id="btn_exportar_pdf" class="btn-exportar">📄 Exportar a PDF</button>
+            <button id="btn_exportar_imagen" class="btn-exportar">🖼️ Exportar Imagen</button>
+        </div>
+    </div>
+
     <!-- Loading indicator -->
-    <div id="loading" style="display: none;">
+    <div id="loading" class="loading-container">
         <div class="spinner"></div>
         <p>Generando reporte...</p>
     </div>
@@ -38,25 +60,31 @@
     </footer>
 
     <script>
-        // Inicializar Pyodide
+        // Inicializar Pyodide (para futura exportación a PDF)
         let pyodide;
         async function initPyodide() {
-            console.log("Cargando Pyodide...");
-            pyodide = await loadPyodide();
-            
-            // Instalar micropip para instalar paquetes Python
-            await pyodide.loadPackage("micropip");
-            const micropip = pyodide.pyimport("micropip");
-            
-            // Instalar reportlab (para PDFs)
-            console.log("Instalando reportlab...");
-            await micropip.install("reportlab");
-            
-            console.log("Pyodide listo!");
-            window.pyodideReady = true;
+            try {
+                console.log("Cargando Pyodide...");
+                pyodide = await loadPyodide();
+                
+                await pyodide.loadPackage("micropip");
+                const micropip = pyodide.pyimport("micropip");
+                
+                console.log("Instalando reportlab...");
+                await micropip.install("reportlab");
+                
+                console.log("Pyodide listo!");
+                window.pyodideReady = true;
+            } catch (error) {
+                console.warn("Pyodide no pudo cargarse, PDFs no disponibles:", error);
+                window.pyodideReady = false;
+            }
         }
         
-        initPyodide();
+        // Iniciar Pyodide en segundo plano
+        if (typeof loadPyodide !== 'undefined') {
+            initPyodide();
+        }
     </script>
 </body>
 </html>
