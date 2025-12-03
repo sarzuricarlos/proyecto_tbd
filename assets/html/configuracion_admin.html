@@ -16,13 +16,35 @@
 
     <article id="panel_admin" class="panel_admin">
         <h3>Panel de Configuración del Administrador</h3>
+        
+        <!-- Botones de navegación -->
         <nav class="menu_admin">
-            <button type="button">📘 Modificar Cursos</button>
-            <button type="button">💬 Modificar Foros</button>
-            <button type="button">🎉 Modificar Eventos</button>
-            <button type="button">💰 Ver Pagos</button>
-            <button type="button">🏫 Modificar Aulas</button>
+            <button type="button" data-tabla="curso">📘 Modificar Cursos</button>
+            <button type="button" data-tabla="foro">💬 Modificar Foros</button>
+            <button type="button" data-tabla="evento">🎉 Modificar Eventos</button>
+            <button type="button" data-tabla="pago">💰 Ver Pagos</button>
+            <button type="button" data-tabla="aula">🏫 Modificar Aulas</button>
         </nav>
+
+        <!-- Panel de acciones -->
+        <div id="panel_acciones" class="panel_acciones" style="display: none;">
+            <button type="button" id="btn_agregar">➕ Agregar</button>
+            <button type="button" id="btn_guardar" style="display: none;">💾 Guardar Cambios</button>
+            <button type="button" id="btn_cancelar" style="display: none;">❌ Cancelar</button>
+        </div>
+
+        <!-- Tabla dinámica -->
+        <div id="contenedor_tabla" class="contenedor_tabla" style="display: none;">
+            <table id="tabla_dinamica">
+                <thead id="tabla_cabecera">
+                    <!-- Cargado dinámicamente -->
+                </thead>
+                <tbody id="tabla_cuerpo">
+                    <!-- Cargado dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+        <button id="btn_volver" class="btn-volver">Volver</button>
     </article>
 
     <footer id="botones_eventos">
