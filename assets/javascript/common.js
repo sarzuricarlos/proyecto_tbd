@@ -76,7 +76,7 @@ const PERMISOS_PERSONAL = [
 // Mapa de páginas permitidas por rol
 const PAGINAS_PERMITIDAS_POR_ROL = {
     1: ["menuprincipal.html", "datos-personales.html", "eventos.html", "cursos.html", "foros.html", "ranking.html", "recompensas.html"],
-    2: ["menu_administrador.html", "configuracion_admin.html", "datos-personales.html", "datos_usuarios.html", "cursos.html", "foros.html", "reportes.html"],
+    2: ["menu_administrador.html", "configuracion_admin.html", "datos-personales.html", "datos_usuarios.html", "cursos.html", "foros.html", "reportes.html", "aula_reservar.html"],
     3: ["menu_personal.html", "datos-personales.html", "eventos.html", "cursos.html", "notas.html", "aula_reservar.html", "foros.html"]
 };
 
