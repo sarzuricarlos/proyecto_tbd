@@ -1,6 +1,7 @@
-// notas.js
 document.addEventListener("DOMContentLoaded", async () => {
-    // Elementos del DOM
+    // ============================================================
+    // 🔹 ELEMENTOS DEL DOM - ACTUALIZADOS
+    // ============================================================
     const menuNotas = document.getElementById("menu_notas");
     const seccionSubir = document.getElementById("seccion_subir_notas");
     const seccionCambiar = document.getElementById("seccion_cambiar_notas");
@@ -16,29 +17,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     const opcionesTarea = document.getElementById("opciones_tarea");
     const opcionesEvaluacion = document.getElementById("opciones_evaluacion");
     
-    // Elementos para tareas
-    const temaSelect = document.getElementById("tema_tarea");
+    // Elementos para tareas - ACTUALIZADOS
+    const cursoTareaSelect = document.getElementById("curso_tarea");
+    const moduloTareaSelect = document.getElementById("modulo_tarea");
+    const temaTareaSelect = document.getElementById("tema_tarea");
     const tareaSelect = document.getElementById("tarea_tema");
     const btnMarcarCompletada = document.getElementById("btn_marcar_completada");
     
-    // Elementos para evaluaciones
+    // Elementos para evaluaciones - ACTUALIZADOS
     const estudianteSelect = document.getElementById("estudiante_evaluacion");
-    const moduloSelect = document.getElementById("modulo_evaluacion");
+    const cursoEvaluacionSelect = document.getElementById("curso_evaluacion");
+    const moduloEvaluacionSelect = document.getElementById("modulo_evaluacion");
     const notaInput = document.getElementById("nota_evaluacion");
     const btnSubirNota = document.getElementById("btn_subir_nota");
-    const cursoTareaSelect = document.getElementById("curso_tarea");
-    const moduloTareaSelect = document.getElementById("modulo_tarea");
 
     // Variables globales para almacenar datos
     let cursosData = [];
-    let modulosData = [];
-    let temasData = [];
-    let tareasData = [];
     let estudiantesData = [];
 
-    // ───────────────────────────────────────────────
+    // ============================================================
     // 🔹 FUNCIONES DE NAVEGACIÓN
-    // ───────────────────────────────────────────────
+    // ============================================================
     function mostrarMenuPrincipal() {
         seccionSubir.style.display = "none";
         seccionCambiar.style.display = "none";
@@ -72,9 +71,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     btnVolverCambiar.onclick = mostrarMenuPrincipal;
     btnVolverMenu.onclick = mostrarMenuPrincipal;
 
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONES PARA SUBIR NOTAS - TAREAS
-    // ───────────────────────────────────────────────
+    // ============================================================
+    // 🔹 FUNCIONES PARA SUBIR NOTAS - TAREAS (ACTUALIZADAS)
+    // ============================================================
     tipoNota.addEventListener("change", () => {
         const valor = tipoNota.value;
         opcionesTarea.style.display = valor === "tarea" ? "block" : "none";
@@ -97,97 +96,76 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function cargarCursosParaTareas() {
-    try {
-        const { data: cursos, error } = await supabase
-            .from('curso')
-            .select('id_curso, titulo_curso')
-            .order('titulo_curso');
+        try {
+            const { data: cursos, error } = await supabase
+                .from('curso')
+                .select('id_curso, titulo_curso')
+                .order('titulo_curso');
 
-        if (error) throw error;
+            if (error) throw error;
 
-        // Limpiar y llenar select de cursos
-        cursoTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un curso...</option>';
-        cursos.forEach(curso => {
-            const option = document.createElement('option');
-            option.value = curso.id_curso;
-            option.textContent = curso.titulo_curso;
-            cursoTareaSelect.appendChild(option);
-        });
+            // Guardar datos globalmente
+            cursosData = cursos || [];
+            
+            // Actualizar select de cursos para tareas
+            cursoTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un curso...</option>';
+            cursosData.forEach(curso => {
+                const option = document.createElement('option');
+                option.value = curso.id_curso;
+                option.textContent = curso.titulo_curso;
+                cursoTareaSelect.appendChild(option);
+            });
 
-        // Limpiar selects dependientes
-        moduloTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
-        temaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
-        tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+            // Limpiar selects siguientes
+            moduloTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
+            temaTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
 
-    } catch (error) {
-        console.error("Error cargando cursos para tareas:", error);
+        } catch (error) {
+            console.error("Error cargando cursos para tareas:", error);
+        }
     }
-}
-cursoTareaSelect.addEventListener('change', async () => {
-    const idCurso = cursoTareaSelect.value;
-    
-    if (!idCurso) return;
 
-    try {
-        const modulos = await cargarModulosPorCurso(idCurso);
+    // Event listener para curso (tareas)
+    cursoTareaSelect.addEventListener("change", async () => {
+        const idCurso = cursoTareaSelect.value;
         
-        // Limpiar y llenar select de módulos
-        moduloTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
-        modulos.forEach(modulo => {
-            const option = document.createElement('option');
-            option.value = modulo.id_modulo;
-            option.textContent = modulo.titulo_modulo;
-            moduloTareaSelect.appendChild(option);
-        });
-
-        // Limpiar selects dependientes
-        temaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
-        tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
-
-    } catch (error) {
-        console.error("Error cargando módulos:", error);
-    }
-});
-moduloTareaSelect.addEventListener('change', async () => {
-    const idModulo = moduloTareaSelect.value;
-    
-    if (!idModulo) return;
-
-    try {
-        const temas = await cargarTemasPorModulo(idModulo);
+        if (!idCurso) {
+            moduloTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
+            temaTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+            return;
+        }
         
-        // Limpiar y llenar select de temas
-        temaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
-        temas.forEach(tema => {
-            const option = document.createElement('option');
-            option.value = tema.id_tema;
-            option.textContent = tema.nombre_tema;
-            temaSelect.appendChild(option);
-        });
+        await cargarModulosParaTareas(idCurso);
+    });
 
-        // Limpiar select de tareas
-        tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+    // Event listener para módulo (tareas)
+    moduloTareaSelect.addEventListener("change", async () => {
+        const idModulo = moduloTareaSelect.value;
+        
+        if (!idModulo) {
+            temaTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+            return;
+        }
+        
+        await cargarTemasParaTareas(idModulo);
+    });
 
-    } catch (error) {
-        console.error("Error cargando temas:", error);
-    }
-});
+    // Event listener para tema (tareas)
+    temaTareaSelect.addEventListener("change", async () => {
+        const idTema = temaTareaSelect.value;
+        
+        if (!idTema) {
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+            return;
+        }
+        
+        await cargarTareasParaTema(idTema);
+    });
 
-// Event listener para cuando se selecciona un tema (ya existe, pero lo mantenemos)
-temaSelect.addEventListener('change', async () => {
-    const idTema = temaSelect.value;
-    
-    if (!idTema) return;
-
-    try {
-        const tareas = await cargarTareasPorTema(idTema);
-        actualizarSelectTareas(tareas);
-    } catch (error) {
-        console.error("Error cargando tareas:", error);
-    }
-});
-
-    async function cargarModulosPorCurso(idCurso) {
+    async function cargarModulosParaTareas(idCurso) {
         try {
             const { data: modulos, error } = await supabase
                 .from('modulo')
@@ -196,14 +174,26 @@ temaSelect.addEventListener('change', async () => {
                 .order('titulo_modulo');
 
             if (error) throw error;
-            return modulos || [];
+
+            // Actualizar select de módulos
+            moduloTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
+            modulos.forEach(modulo => {
+                const option = document.createElement('option');
+                option.value = modulo.id_modulo;
+                option.textContent = modulo.titulo_modulo;
+                moduloTareaSelect.appendChild(option);
+            });
+
+            // Limpiar selects siguientes
+            temaTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+
         } catch (error) {
-            console.error("Error cargando módulos:", error);
-            return [];
+            console.error("Error cargando módulos para tareas:", error);
         }
     }
 
-    async function cargarTemasPorModulo(idModulo) {
+    async function cargarTemasParaTareas(idModulo) {
         try {
             const { data: temas, error } = await supabase
                 .from('tema')
@@ -212,14 +202,25 @@ temaSelect.addEventListener('change', async () => {
                 .order('nombre_tema');
 
             if (error) throw error;
-            return temas || [];
+
+            // Actualizar select de temas
+            temaTareaSelect.innerHTML = '<option value="" selected disabled>Seleccione un tema...</option>';
+            temas.forEach(tema => {
+                const option = document.createElement('option');
+                option.value = tema.id_tema;
+                option.textContent = tema.nombre_tema;
+                temaTareaSelect.appendChild(option);
+            });
+
+            // Limpiar select de tareas
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+
         } catch (error) {
-            console.error("Error cargando temas:", error);
-            return [];
+            console.error("Error cargando temas para tareas:", error);
         }
     }
 
-    async function cargarTareasPorTema(idTema) {
+    async function cargarTareasParaTema(idTema) {
         try {
             const { data: tareas, error } = await supabase
                 .from('tarea')
@@ -228,16 +229,57 @@ temaSelect.addEventListener('change', async () => {
                 .order('nombre_tarea');
 
             if (error) throw error;
-            return tareas || [];
+
+            // Actualizar select de tareas
+            tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
+            tareas.forEach(tarea => {
+                const option = document.createElement('option');
+                option.value = tarea.id_tarea;
+                const estado = tarea.estado_tarea ? '✅ Completada' : '❌ Pendiente';
+                option.textContent = `${tarea.nombre_tarea} (${estado})`;
+                tareaSelect.appendChild(option);
+            });
+
         } catch (error) {
             console.error("Error cargando tareas:", error);
-            return [];
         }
     }
 
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONES PARA SUBIR NOTAS - EVALUACIONES
-    // ───────────────────────────────────────────────
+    // ============================================================
+    // 🔹 FUNCIONALIDAD PARA MARCAR TAREAS COMPLETADAS (ACTUALIZADA)
+    // ============================================================
+    btnMarcarCompletada.onclick = async () => {
+        const idTarea = tareaSelect.value;
+        
+        if (!idTarea) {
+            alert("Por favor seleccione una tarea");
+            return;
+        }
+
+        try {
+            const { error } = await supabase
+                .from('tarea')
+                .update({ estado_tarea: true })
+                .eq('id_tarea', idTarea);
+
+            if (error) throw error;
+
+            alert("✅ Tarea marcada como completada");
+            
+            // Recargar tareas para actualizar estado
+            if (temaTareaSelect.value) {
+                await cargarTareasParaTema(temaTareaSelect.value);
+            }
+
+        } catch (error) {
+            console.error("Error marcando tarea:", error);
+            alert("❌ Error al marcar tarea como completada");
+        }
+    };
+
+    // ============================================================
+    // 🔹 FUNCIONES PARA SUBIR NOTAS - EVALUACIONES (ACTUALIZADAS)
+    // ============================================================
     async function cargarEstudiantes() {
         try {
             const { data: estudiantes, error } = await supabase
@@ -248,7 +290,7 @@ temaSelect.addEventListener('change', async () => {
                     correo,
                     asignacion_usuario_rol!inner(id_rol)
                 `)
-                .eq('asignacion_usuario_rol.id_rol', 1)
+                .eq('asignacion_usuario_rol.id_rol', 1) // Rol de estudiante
                 .order('nombre_apellido');
 
             if (error) {
@@ -286,13 +328,34 @@ temaSelect.addEventListener('change', async () => {
 
             if (error) throw error;
 
-            // Guardar datos globalmente
-            cursosData = cursos || [];
+            // Actualizar select de cursos para evaluaciones
+            cursoEvaluacionSelect.innerHTML = '<option value="" selected disabled>Seleccione un curso...</option>';
+            cursos.forEach(curso => {
+                const option = document.createElement('option');
+                option.value = curso.id_curso;
+                option.textContent = curso.titulo_curso;
+                cursoEvaluacionSelect.appendChild(option);
+            });
+
+            // Limpiar select de módulos
+            moduloEvaluacionSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
 
         } catch (error) {
-            console.error("Error cargando cursos:", error);
+            console.error("Error cargando cursos para evaluaciones:", error);
         }
     }
+
+    // Event listener para curso (evaluaciones)
+    cursoEvaluacionSelect.addEventListener("change", async () => {
+        const idCurso = cursoEvaluacionSelect.value;
+        
+        if (!idCurso) {
+            moduloEvaluacionSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
+            return;
+        }
+        
+        await cargarModulosParaEvaluaciones(idCurso);
+    });
 
     async function cargarModulosParaEvaluaciones(idCurso) {
         try {
@@ -305,58 +368,25 @@ temaSelect.addEventListener('change', async () => {
             if (error) throw error;
 
             // Actualizar select de módulos
-            moduloSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
+            moduloEvaluacionSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
             modulos.forEach(modulo => {
                 const option = document.createElement('option');
                 option.value = modulo.id_modulo;
                 option.textContent = modulo.titulo_modulo;
-                moduloSelect.appendChild(option);
+                moduloEvaluacionSelect.appendChild(option);
             });
 
         } catch (error) {
-            console.error("Error cargando módulos:", error);
+            console.error("Error cargando módulos para evaluaciones:", error);
         }
     }
 
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONALIDAD PARA MARCAR TAREAS COMPLETADAS
-    // ───────────────────────────────────────────────
-    btnMarcarCompletada.onclick = async () => {
-        const idTarea = tareaSelect.value;
-        
-        if (!idTarea) {
-            alert("Por favor seleccione una tarea");
-            return;
-        }
-
-        try {
-            const { error } = await supabase
-                .from('tarea')
-                .update({ estado_tarea: true })
-                .eq('id_tarea', idTarea);
-
-            if (error) throw error;
-
-            alert("✅ Tarea marcada como completada");
-            
-            // Recargar tareas para actualizar estado
-            if (temaSelect.value) {
-                const tareas = await cargarTareasPorTema(temaSelect.value);
-                actualizarSelectTareas(tareas);
-            }
-
-        } catch (error) {
-            console.error("Error marcando tarea:", error);
-            alert("❌ Error al marcar tarea como completada");
-        }
-    };
-
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONALIDAD PARA SUBIR EVALUACIONES
-    // ───────────────────────────────────────────────
+    // ============================================================
+    // 🔹 FUNCIONALIDAD PARA SUBIR EVALUACIONES (ACTUALIZADA)
+    // ============================================================
     btnSubirNota.onclick = async () => {
         const idEstudiante = estudianteSelect.value;
-        const idModulo = moduloSelect.value;
+        const idModulo = moduloEvaluacionSelect.value;
         const nota = notaInput.value;
 
         // Validaciones
@@ -365,7 +395,8 @@ temaSelect.addEventListener('change', async () => {
             return;
         }
 
-        if (nota < 0 || nota > 100 || isNaN(nota)) {
+        const notaNum = parseInt(nota);
+        if (isNaN(notaNum) || notaNum < 0 || notaNum > 100) {
             alert("La nota debe ser un número entre 0 y 100");
             return;
         }
@@ -377,7 +408,7 @@ temaSelect.addEventListener('change', async () => {
                 .insert([
                     {
                         id_modulo: idModulo,
-                        notas: parseInt(nota),
+                        notas: notaNum,
                         fecha_subida: new Date().toISOString().split('T')[0]
                     }
                 ])
@@ -412,7 +443,8 @@ temaSelect.addEventListener('change', async () => {
             
             // Limpiar formulario
             estudianteSelect.value = "";
-            moduloSelect.value = "";
+            cursoEvaluacionSelect.value = "";
+            moduloEvaluacionSelect.innerHTML = '<option value="" selected disabled>Seleccione un módulo...</option>';
             notaInput.value = "";
 
         } catch (error) {
@@ -421,9 +453,9 @@ temaSelect.addEventListener('change', async () => {
         }
     };
 
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONES PARA CAMBIAR NOTAS (TABLA)
-    // ───────────────────────────────────────────────
+    // ============================================================
+    // 🔹 FUNCIONES PARA CAMBIAR NOTAS (TABLA) - SIN CAMBIOS
+    // ============================================================
     async function cargarTablaNotas() {
         try {
             tablaCambiarNotas.innerHTML = "<tr><td colspan='6'>Cargando datos...</td></tr>";
@@ -637,49 +669,34 @@ temaSelect.addEventListener('change', async () => {
     }
 
     async function eliminarNotaEnTabla(idRanking, idEvaluacion) {
-    try {
-        // 1. PRIMERO eliminar de ranking (para liberar la restricción de clave foránea)
-        const { error: errorRanking } = await supabase
-            .from('ranking')
-            .delete()
-            .eq('id_ranking', idRanking);
+        try {
+            // Eliminar de ranking primero
+            const { error: errorRanking } = await supabase
+                .from('ranking')
+                .delete()
+                .eq('id_ranking', idRanking);
 
-        if (errorRanking) throw errorRanking;
+            if (errorRanking) throw errorRanking;
 
-        // 2. LUEGO eliminar la evaluación (ya no hay referencias en ranking)
-        const { error: errorEvaluacion } = await supabase
-            .from('evaluacion')
-            .delete()
-            .eq('id_evaluacion', idEvaluacion);
+            // Luego eliminar la evaluación
+            const { error: errorEvaluacion } = await supabase
+                .from('evaluacion')
+                .delete()
+                .eq('id_evaluacion', idEvaluacion);
 
-        if (errorEvaluacion) throw errorEvaluacion;
+            if (errorEvaluacion) throw errorEvaluacion;
 
-        alert("✅ Evaluación eliminada correctamente");
-        await cargarTablaNotas(); // Recargar tabla
+            alert("✅ Evaluación eliminada correctamente");
+            await cargarTablaNotas(); // Recargar tabla
 
-    } catch (error) {
-        console.error("Error eliminando evaluación:", error);
-        
-        if (error.code === '23503') {
-            alert("❌ No se puede eliminar la evaluación porque está siendo utilizada en el sistema. Contacte al administrador.");
-        } else {
+        } catch (error) {
+            console.error("Error eliminando evaluación:", error);
             alert("❌ Error al eliminar evaluación");
         }
     }
-}
 
-    // ───────────────────────────────────────────────
-    // 🔹 FUNCIONES AUXILIARES
-    // ───────────────────────────────────────────────
-    function actualizarSelectTareas(tareas) {
-    tareaSelect.innerHTML = '<option value="" selected disabled>Seleccione una tarea...</option>';
-    tareas.forEach(tarea => {
-        const option = document.createElement('option');
-        option.value = tarea.id_tarea;
-        option.textContent = `${tarea.nombre_tarea} ${tarea.estado_tarea ? '✅' : '❌'}`;
-        tareaSelect.appendChild(option);
-    });
-}
-    // Inicializar
+    // ============================================================
+    // 🔹 INICIALIZACIÓN
+    // ============================================================
     mostrarMenuPrincipal();
 });
