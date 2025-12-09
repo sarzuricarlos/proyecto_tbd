@@ -24,7 +24,8 @@ const MAPA_PERMISOS = {
     "Gestionar Pagos": "gestionar_pagos",
     "Asignar Roles": "asignar_roles",
     "Super Admin": "super_admin",
-    "Ver Menu Principal": "ver_menu_principal"
+    "Ver Menu Principal": "ver_menu_principal",
+    "Ver Foros": "ver_foros"
 };
 
 // Permisos por rol (basados en tus datos de rol_permiso)
@@ -32,7 +33,7 @@ const PERMISOS_ESTUDIANTE = [
     "Ver Dashboard",           // id_permiso: 11
     "Ver Menu Principal",      // id_permiso: 21  
     "Ver Reportes",           // id_permiso: 5
-    "Asignar Notas"           // id_permiso: 8 (probablemente para auto-evaluación)
+    "Ver Foros"
 ];
 
 const PERMISOS_ADMINISTRADOR = [
@@ -55,7 +56,8 @@ const PERMISOS_ADMINISTRADOR = [
     "Gestionar Estudiantes",   // id_permiso: 3 (ajustado)
     "Asignar Notas",           // id_permiso: 8
     "Super Admin",             // id_permiso: 20
-    "Ver Menu Principal"       // id_permiso: 21
+    "Ver Menu Principal",      // id_permiso: 21
+    "Ver Foros"
 ];
 
 const PERMISOS_PERSONAL = [
@@ -66,7 +68,9 @@ const PERMISOS_PERSONAL = [
     "Gestionar Aulas",         // id_permiso: 9
     "Gestionar Eventos",       // id_permiso: 12
     "Ver Datos Personales",    // id_permiso: 13
-    "Ver Menu Principal"       // id_permiso: 21
+    "Ver Menu Principal",       // id_permiso: 21
+    "Asignar Notas",
+    "Ver Foros"
 ];
 
 // Mapa de páginas permitidas por rol
@@ -240,7 +244,6 @@ async function verificarAutenticacion() {
 
         if (!userData) {
             console.warn("⚠️ No hay usuario en localStorage");
-            redirigirALogin();
             return null;
         }
 
