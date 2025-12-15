@@ -159,38 +159,144 @@ document.addEventListener("DOMContentLoaded", async () => {
             cursoSeleccionado = null;
         });
     }
+    // ============================================================
+    // 🔹 Mostrar resumen del pago 
+    // ============================================================
+    async function mostrarResumenPago(idUsuario, idCurso, nombreCurso) {
+    // 1. Consulta el último registro de pago para este usuario y curso
+    const { data, error } = await supabase
+    .from('pago')
+    .select('id_pago, fecha_pago, monto, metodo_pago, estado_pago')
+    .eq('id_usuario', idUsuario)
+    .eq('id_curso', idCurso)
+    .order('id_pago', { ascending: false })
+    .limit(1)
+    .single();
 
+    if (error) {
+        console.error("❌ Error obteniendo pago para el voucher:", error);
+        showMessage("Error al obtener los detalles del pago. Verifique el horario.", "error");
+        return;
+    }
+
+    if (!data) {
+        console.warn("⚠️ No se encontraron datos de pago para generar el voucher.");
+        showMessage("Inscripción realizada, pero no se encontró el registro de pago. Contacte a soporte.", "warning");
+        return;
+    }
+
+    // 2. Variables para la mejora estética
+    const estadoTexto = data.estado_pago ? 'APROBADO' : 'PENDIENTE';
+    const estadoColor = data.estado_pago ? '#28a745' : '#ffc107'; // Verde o Amarillo
+    const fechaPago = data.fecha_pago ? new Date(data.fecha_pago).toLocaleDateString('es-ES', { 
+        year: 'numeric', month: 'long', day: 'numeric' 
+    }) : 'N/A';
+    
+
+    // 3. Generación del HTML del Voucher (Factura Digital)
+    const resumenHTML = `
+    <div id="modalVoucher" style="
+        position:fixed; top:0; left:0; width:100%; height:100%; 
+        background:rgba(0,0,0,0.8); display:flex; 
+        justify-content:center; align-items:center; z-index:2000;
+    ">
+        <div style="
+            background:#fff; color:#333; padding:30px; border-radius:12px; 
+            width:400px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-family: Arial, sans-serif;
+        ">
+            <h2 style="text-align:center; color:#007bff; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;">
+                Factura Pago Digital
+            </h2>
+
+            <div style="margin-bottom: 20px;">
+                <p style="font-size: 1.1em; margin-bottom: 5px;">
+                    <strong>Transacción N°:</strong> ${data.id_pago}
+                </p>
+                <p style="font-size: 1.1em; margin-bottom: 5px;">
+                    <strong>Fecha de Emisión:</strong> ${fechaPago}
+                </p>
+                <p style="font-size: 1.1em; margin-bottom: 5px;">
+                    <strong>Método de Pago:</strong> ${data.metodo_pago}
+                </p>
+            </div>
+
+            <div style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <h4 style="margin-top: 0; color:#007bff;">Detalle de la Factura</h4>
+                <p style="border-bottom: 1px dashed #eee; padding-bottom: 5px;">
+                    Inscripción al Curso: <strong>${nombreCurso}</strong>
+                </p>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; font-size: 1.2em;">
+                    <strong>Total Pagado:</strong>
+                    <strong style="color: #28a745;">${data.monto} Bs</strong>
+                </div>
+            </div>
+
+            <div style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 5px; margin-bottom: 20px;">
+                <p style="font-size: 1.2em; margin: 0;">
+                    Estado: 
+                    <strong style="color: ${estadoColor};">${estadoTexto}</strong>
+                </p>
+            </div>
+
+            <button onclick="document.getElementById('modalVoucher').remove()"
+                style="
+                    width:100%; padding:12px; background: #dc3545; color: white; 
+                    border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em;
+                    transition: background-color 0.3s;
+                "
+                onmouseover="this.style.backgroundColor='#c82333'"
+                onmouseout="this.style.backgroundColor='#dc3545'"
+            >
+                Cerrar Comprobante
+            </button>
+        </div>
+    </div>
+    `;
+
+    // 4. Inserción del modal en el cuerpo del documento
+    document.getElementById('modalVoucher')?.remove(); // Elimina cualquier voucher anterior
+    document.body.insertAdjacentHTML('beforeend', resumenHTML);
+}
     // ============================================================
     // 🔹 Realizar Inscripción
     // ============================================================
     async function realizarInscripcion() {
-        const metodoPago = document.getElementById('selectMetodoPago').value;
-        if (!metodoPago) {
-            showMessage('Por favor selecciona un método de pago', 'error');
-            return;
+    const metodoPago = document.getElementById('selectMetodoPago').value;
+    if (!metodoPago) {
+        showMessage('Por favor selecciona un método de pago', 'error');
+        return;
+    }
+
+    try {
+        const { data, error } = await supabase.rpc('sp_realizar_inscripcion_completa', {
+            p_id_usuario: user.id_usuario,
+            p_id_curso: parseInt(cursoSeleccionado.idCurso),
+            p_metodo_pago: metodoPago
+        });
+
+        if (error) throw error;
+
+        if (data.success) {
+            
+            document.getElementById('modalInscripcion').remove(); 
+            
+            await mostrarResumenPago(
+                user.id_usuario,
+                parseInt(cursoSeleccionado.idCurso),
+                cursoSeleccionado.titulo_curso // <<-- ¡AQUÍ ESTÁ LA CORRECCIÓN!
+            );
+
+            cursoSeleccionado = null;
+            
+            showMessage('✅ ' + data.message, 'success');
+            await mostrarCursosDisponibles();
+        } else {
+            showMessage('❌ ' + data.message, 'error');
         }
 
-        try {
-            const { data, error } = await supabase.rpc('sp_realizar_inscripcion_completa', {
-                p_id_usuario: user.id_usuario,
-                p_id_curso: parseInt(cursoSeleccionado.idCurso),
-                p_metodo_pago: metodoPago
-            });
-
-            if (error) throw error;
-
-            if (data.success) {
-                showMessage('✅ ' + data.message, 'success');
-                document.getElementById('modalInscripcion').remove();
-                cursoSeleccionado = null;
-                setTimeout(() => mostrarCursosDisponibles(), 1000);
-            } else {
-                showMessage('❌ ' + data.message, 'error');
-            }
-
-        } catch (err) {
-            console.error("❌ Error realizando inscripción:", err);
-            showMessage('❌ Error al realizar la inscripción: ' + err.message, 'error');
+    } catch (err) {
+        console.error("❌ Error realizando inscripción:", err);
+        showMessage('❌ Error al realizar la inscripción: ' + err.message, 'error');
         }
     }
 
