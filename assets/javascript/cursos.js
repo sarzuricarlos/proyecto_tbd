@@ -162,35 +162,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     // ============================================================
     // 🔹 Mostrar resumen del pago 
     // ============================================================
-    async function mostrarResumenPago(idUsuario, idCurso, nombreCurso) {
-    // 1. Consulta el último registro de pago para este usuario y curso
+    async function mostrarResumenPago(idUsuario, idCurso) {
+
     const { data, error } = await supabase
-    .from('pago')
-    .select('id_pago, fecha_pago, monto, metodo_pago, estado_pago')
-    .eq('id_usuario', idUsuario)
-    .eq('id_curso', idCurso)
-    .order('id_pago', { ascending: false })
-    .limit(1)
-    .single();
+        .from('pago')
+        .select(`
+            id_pago,
+            fecha_pago,
+            monto,
+            metodo_pago,
+            estado_pago,
+            curso (
+                titulo_curso
+            )
+        `)
+        .eq('id_usuario', idUsuario)
+        .eq('id_curso', idCurso)
+        .order('id_pago', { ascending: false })
+        .limit(1)
+        .single();
 
-    if (error) {
-        console.error("❌ Error obteniendo pago para el voucher:", error);
-        showMessage("Error al obtener los detalles del pago. Verifique el horario.", "error");
+     if (error || !data) {
+        console.error("❌ Error obteniendo voucher:", error);
+        showMessage("No se pudo generar el voucher", "error");
         return;
     }
 
-    if (!data) {
-        console.warn("⚠️ No se encontraron datos de pago para generar el voucher.");
-        showMessage("Inscripción realizada, pero no se encontró el registro de pago. Contacte a soporte.", "warning");
-        return;
-    }
-
-    // 2. Variables para la mejora estética
+    const nombreCurso = data.curso?.titulo_curso || 'Curso no disponible';
     const estadoTexto = data.estado_pago ? 'APROBADO' : 'PENDIENTE';
-    const estadoColor = data.estado_pago ? '#28a745' : '#ffc107'; // Verde o Amarillo
-    const fechaPago = data.fecha_pago ? new Date(data.fecha_pago).toLocaleDateString('es-ES', { 
-        year: 'numeric', month: 'long', day: 'numeric' 
-    }) : 'N/A';
+    const estadoColor = data.estado_pago ? '#28a745' : '#ffc107';
+
+    const fechaPago = data.fecha_pago
+        ? new Date(data.fecha_pago).toLocaleDateString('es-ES')
+        : 'N/A';
     
 
     // 3. Generación del HTML del Voucher (Factura Digital)
@@ -282,8 +286,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             await mostrarResumenPago(
                 user.id_usuario,
-                parseInt(cursoSeleccionado.idCurso),
-                cursoSeleccionado.titulo_curso // <<-- ¡AQUÍ ESTÁ LA CORRECCIÓN!
+                parseInt(cursoSeleccionado.idCurso), 
             );
 
             cursoSeleccionado = null;
