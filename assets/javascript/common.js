@@ -352,14 +352,15 @@ async function validarAccesoPorRol() {
         
         // Verificar cada permiso requerido
         for (const permisoNombre of permisosRequeridos) {
-            const tienePermiso = await verificarPermisoEnBD(idRol, permisoNombre);
+            const permisoKey = MAPA_PERMISOS[permisoNombre] || permisoNombre;
             
-            if (!tienePermiso) {
+            if (!tienePermiso(permisoKey)) {
                 console.warn(`❌ Permiso requerido no activo: ${permisoNombre}`);
                 tieneTodosPermisos = false;
                 break;
             }
         }
+
         
         if (!tieneTodosPermisos) {
             alert("❌ No cuentas con los permisos necesarios para acceder a esta página.");
