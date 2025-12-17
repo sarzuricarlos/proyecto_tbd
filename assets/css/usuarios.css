@@ -49,17 +49,36 @@ th {
     color: #7b7b7b;
 }
 
-/* ======== TABLA ======== */
 #tabla_usuarios {
     width: 100%;
     border-collapse: collapse;
     text-align: center;
+    max-height: 40vh;
+    display: block;
+    overflow-y: auto;
 }
 
 #tabla_usuarios thead {
     background-color: #00000063;
+    position: sticky;
+    top: 0;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
+#tabla_usuarios tbody {
+    display: block;
+    width: 100%;
+}
+
+#tabla_usuarios tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Mantener tus estilos originales... */
 #tabla_usuarios th {
     padding: 12px;
     color: #f8fafc;
@@ -160,6 +179,42 @@ button:active {
     display: none;
 }
 
+.contenedor-buscador {
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.contenedor-buscador input#buscador_usuarios[type="text"] {
+    width: 100% !important;
+    padding: 15px 20px !important;
+    font-size: 1rem !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(12px) !important;
+    color: white !important;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+    /* Reset específico para anular los estilos generales */
+    border: 2px solid transparent !important;
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.contenedor-buscador input#buscador_usuarios[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.contenedor-buscador input#buscador_usuarios[type="text"]:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
 /* ======== RESPONSIVE ======== */
 @media (max-width: 600px) {
     #tabla_usuarios th, #tabla_usuarios td {
@@ -173,5 +228,19 @@ button:active {
 
     #usuarios {
         padding: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #buscador_usuarios {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #buscador_usuarios {
+        padding: 10px 12px;
+        font-size: 0.85rem;
     }
 }
