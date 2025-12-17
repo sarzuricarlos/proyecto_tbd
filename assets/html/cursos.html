@@ -6,6 +6,8 @@
     <link rel="shortcut icon" href="../icons/bash_icono_pagina.svg" type="image/x-icon">
     <link rel="stylesheet" href="../css/cursos.css">
     <title>Cursos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../javascript/conexion_supabase.js"></script>
     <script src="../javascript/common.js"></script>
@@ -18,11 +20,11 @@
     <!-- 🔹 Sección del menú principal -->
     <article id="menu">
         <button type="button" class="boton_menu" id="boton_disponibles">
-            <img src="../icons/book_curso.svg" alt="">
+            <img src="../icons/book_curso.svg" alt="Libro">
             <span>Cursos disponibles</span>
         </button>
         <button type="button" class="boton_menu" id="boton_horario">
-            <img src="../icons/calendar_horario.svg" alt="">
+            <img src="../icons/calendar_horario.svg" alt="Calendario">
             <span>Horarios</span>
         </button>
     </article>
@@ -47,5 +49,8 @@
     <footer id="botones_ranking">
         <button type="button" id="volver_menu">Menú principal</button>
     </footer>
+
+    <!-- Modal para voucher (se insertará dinámicamente) -->
+    <div id="modal-container"></div>
 </body>
 </html>

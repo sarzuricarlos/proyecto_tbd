@@ -42,7 +42,7 @@ h3 {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(12px);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ✅ se adapta al número de botones */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 25px;
     justify-items: center;
     align-items: center;
@@ -116,67 +116,48 @@ h3 {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Mensaje cuando no hay resultados */
-.mensaje-no-resultados {
-    padding: 15px;
-    text-align: center;
-    color: #666;
-    font-style: italic;
-}
-
+/* Tablas */
 .tabla_cursos {
     width: 100%;
+    max-width: 1000px;
     border-collapse: collapse;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
     text-align: center;
-    /* Eliminamos las propiedades de scroll de la tabla principal */
+    margin: 0 auto;
 }
 
-/* Contenedor para el cuerpo de la tabla con scroll */
-.tabla-contenedor-cuerpo {
-    max-height: 40vh; /* Un poco menos del 50% para dar espacio al header */
-    overflow-y: auto;
-    display: block;
-}
-
-/* Header fijo */
 .tabla_cursos thead {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
     background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Cuerpo con scroll */
-.tabla_cursos tbody {
-    display: block;
-    width: 100%;
-    max-height: 40vh;
-    overflow-y: auto;
-}
-
-.tabla_cursos tr {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .tabla_cursos th,
 .tabla_cursos td {
     color: #f1f5f9;
-    padding: 8px;
+    padding: 12px 8px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tabla_cursos th {
-    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
-    padding: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 10; /* Asegura que el header quede por encima */
+    font-weight: 600;
+}
+
+.tabla_cursos tbody {
+    display: block;
+    max-height: 40vh;
+    overflow-y: auto;
+}
+
+.tabla_cursos thead,
+.tabla_cursos tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .tabla_cursos tr:nth-child(even) {
@@ -187,12 +168,36 @@ h3 {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Botones en tabla */
+.btn-inscribir {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.btn-inscribir:hover {
+    background: linear-gradient(135deg, #45a049 0%, #388E3C 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
+.fila-inscrito {
+    background-color: rgba(76, 175, 80, 0.1) !important;
+    color: #c8e6c9;
+}
+
+/* Contenedor botón volver */
 .contenedor-boton {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 #btn_volver_disponibles {
@@ -205,6 +210,7 @@ h3 {
     cursor: pointer;
     font-weight: 600;
     transition: background 0.3s ease, transform 0.2s ease;
+    backdrop-filter: blur(10px);
 }
 
 #btn_volver_disponibles:hover {
@@ -212,11 +218,7 @@ h3 {
     transform: scale(1.05);
 }
 
-#btn_volver_disponibles:active {
-    transform: scale(0.98);
-}
-
-/* Ajustar las secciones para mejor visualización */
+/* Secciones */
 #seccion_cursos, #seccion_horario {
     display: flex;
     flex-direction: column;
@@ -227,10 +229,13 @@ h3 {
     margin: 0 auto;
     gap: 20px;
 }
+
+/* Footer */
 #botones_ranking {
     display: flex;
     justify-content: center;
     margin-top: 1.5rem;
+    width: 100%;
 }
 
 #volver_menu {
@@ -243,6 +248,7 @@ h3 {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    backdrop-filter: blur(10px);
 }
 
 #volver_menu:hover {
@@ -250,12 +256,321 @@ h3 {
     transform: scale(1.05);
 }
 
-#volver_menu:active {
-    transform: scale(0.98);
+/* Estilos para el voucher */
+.voucher-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
 }
 
+.voucher-container {
+    background: white;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.4s ease;
+}
+
+.voucher-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voucher-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    font-size: 24px;
+}
+
+.voucher-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-approved {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #4CAF50;
+}
+
+.status-pending {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid #FFC107;
+}
+
+.voucher-body {
+    padding: 25px;
+}
+
+.voucher-section {
+    margin-bottom: 20px;
+}
+
+.voucher-section h4 {
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #f0f0f0;
+    font-size: 16px;
+}
+
+.voucher-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e0e0;
+}
+
+.detail-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #333;
+    font-weight: 600;
+}
+
+.payment-method {
+    color: #667eea;
+}
+
+.amount {
+    color: #4CAF50;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text-success {
+    color: #4CAF50;
+}
+
+.text-warning {
+    color: #FFC107;
+}
+
+.voucher-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #667eea, transparent);
+    margin: 20px 0;
+}
+
+.voucher-footer {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 0 0 12px 12px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.voucher-actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-print, .btn-close {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.btn-print {
+    background: #e3f2fd;
+    color: #1976d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-print:hover {
+    background: #bbdefb;
+}
+
+.btn-close {
+    background: #4CAF50;
+    color: white;
+}
+
+.btn-close:hover {
+    background: #45a049;
+}
+
+.voucher-note {
+    background: #fff8e1;
+    border-left: 4px solid #FFC107;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #666;
+}
+
+.voucher-note p {
+    margin: 5px 0;
+}
+
+/* Modal de inscripción */
+.modal-inscripcion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-inscripcion-contenido {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-inscripcion h3 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.modal-inscripcion p {
+    margin: 10px 0;
+    color: #555;
+}
+
+.modal-inscripcion select {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: white;
+}
+
+.modal-inscripcion-botones {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1;
+}
+
+.btn-cancelar {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    flex: 1;
+}
+
+.btn-confirmar:hover, .btn-cancelar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Responsive */
 @media (max-width: 600px) {
     #menu {
-        grid-template-columns: 1fr; /* en móviles, una columna */
+        grid-template-columns: 1fr;
+    }
+    
+    .voucher-container {
+        width: 95%;
+        margin: 10px;
+    }
+    
+    .voucher-actions {
+        flex-direction: column;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .modal-inscripcion-botones {
+        flex-direction: column;
+    }
+    
+    .tabla_cursos {
+        font-size: 0.9rem;
+    }
+    
+    .tabla_cursos th,
+    .tabla_cursos td {
+        padding: 8px 4px;
     }
 }
