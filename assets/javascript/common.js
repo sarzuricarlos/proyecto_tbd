@@ -352,9 +352,9 @@ async function validarAccesoPorRol() {
         
         // Verificar cada permiso requerido
         for (const permisoNombre of permisosRequeridos) {
-            const permisoKey = MAPA_PERMISOS[permisoNombre] || permisoNombre;
-            
-            if (!tienePermiso(permisoKey)) {
+            const tienePermiso = await verificarPermisoEnBD(idRol, permisoNombre);
+
+            if (!tienePermiso) {
                 console.warn(`❌ Permiso requerido no activo: ${permisoNombre}`);
                 tieneTodosPermisos = false;
                 break;
