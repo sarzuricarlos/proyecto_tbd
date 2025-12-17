@@ -7,16 +7,14 @@
     <link rel="stylesheet" href="../css/configur_admin.css">
     <link rel="stylesheet" href="../css/reportes.css">
     <title>Reportes</title>
-    <!-- Chart.js para gráficos -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <!-- Pyodide (para PDFs futuros) -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
     <!-- Nuestros scripts -->
-    <script src="../javascript/conexion_supabase.js"></script>
-    <script src="../javascript/common.js"></script>
-    <script src="../javascript/reporte.js"></script>
+    <script src="../javascript/conexion_supabase.js" defer></script>
+    <script src="../javascript/common.js" defer></script>
+    <script src="../javascript/reporte.js" defer></script>
 </head>
 <body>
     <header>Bash Academy</header>
@@ -38,9 +36,6 @@
 
     <div id="reportContent" class="report-container">
         <h2 id="reportTitle"></h2>
-        <div class="chart-container">
-            <canvas id="pieChart"></canvas>
-        </div>
         <div class="stats-container" id="statsContainer"></div>
         
         <!-- Botón para exportar -->
